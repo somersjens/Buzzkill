@@ -8,153 +8,187 @@
   <meta name="theme-color" content="#F5C300">
 
   <!-- Icons -->
-  <link rel="icon" href="./buzzkill-icon.png">
+  <link rel="icon" type="image/png" href="./buzzkill-icon.png">
   <link rel="apple-touch-icon" href="./buzzkill-icon.png">
+  <meta property="og:title" content="Buzzkill — Gentle nudges for mindful app time">
+  <meta property="og:description" content="Pick apps, set an interval, get gentle nudges. Private by design.">
   <meta property="og:image" content="./buzzkill-icon.png">
 
   <style>
-    /* Compact, consistent scale */
+    /* === Design tokens: compact, professional === */
     :root{
-      --y: 245 195 0;   /* #F5C300 */
-      --y2: 255 225 90;
-      --ink: 17 17 17;
-      --muted: 95 95 95;
+      /* Colors */
+      --y: 245 195 0;     /* primary yellow */
+      --y2: 255 225 90;   /* soft yellow */
+      --ink: 22 22 22;    /* body text */
+      --muted: 112 112 112;
       --card: 255 255 255;
       --bg: 252 252 252;
 
+      /* Layout */
+      --container: 920px;   /* tighter for a pro look */
+      --px: 16px;           /* page side padding */
+      --py: 28px;           /* section vertical rhythm (compact) */
       --radius: 14px;
-      --pad-x: 18px;
-      --pad-y: 28px;    /* uniform section padding */
-      --gap: 14px;      /* uniform grid gap */
+
+      /* Type scale (optical, compact) */
+      --fs-hero: clamp(1.9rem, 1.2rem + 2.2vw, 2.35rem);
+      --fs-h3: 1.05rem;
+      --fs-body: 1rem;
+      --fs-small: .94rem;
+
+      /* Effects */
+      --shadow-card: 0 1px 0 rgba(255,255,255,.55) inset, 0 8px 18px rgba(245,195,0,.10);
+      --shadow-btn: 0 8px 20px rgba(245,195,0,.20);
+      --shadow-hero: 0 10px 22px rgba(0,0,0,.12), 0 0 0 18px rgba(245,195,0,.12);
     }
     @media (prefers-color-scheme: dark){
-      :root{ --ink: 232 232 232; --muted: 170 170 170; --card: 24 24 24; --bg: 10 10 10 }
+      :root{ --ink: 235 235 235; --muted: 170 170 170; --card: 26 26 26; --bg: 10 10 10 }
     }
 
+    /* Base */
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
-      font-size:16px;
-      line-height:1.55;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      line-height: 1.55;
       color: rgb(var(--ink));
       background:
-        radial-gradient(900px 480px at 80% -10%, rgba(var(--y2)/.45), transparent 60%),
+        radial-gradient(780px 420px at 82% -8%, rgba(var(--y2)/.45), transparent 60%),
         linear-gradient(180deg, rgba(var(--y)/.10), rgba(255 255 255 / 0)),
         rgb(var(--bg));
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+    img{display:block;max-width:100%;height:auto}
+    a{color:inherit}
 
-    .container{max-width:980px;margin:0 auto;padding:0 var(--pad-x)}
-
-    /* Header (tight) */
+    .container{max-width:var(--container); margin:0 auto; padding:0 var(--px)}
     header{padding:10px 0}
     .top{display:flex;justify-content:space-between;align-items:center}
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
-    .brand img{width:34px;height:34px;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,.16)}
+
+    /* Brand */
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .brand img{width:32px;height:32px;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,.15)}
     .brand span{font-weight:800;letter-spacing:.15px;font-size:15px}
 
-    /* Sections (uniform, compact) */
-    section{padding:var(--pad-y) 0}
+    /* Sections */
+    section{padding: var(--py) 0}
 
     /* Hero */
-    .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;align-items:center}
+    .hero{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 18px;
+      align-items: center;
+    }
     @media (max-width:860px){ .hero{grid-template-columns:1fr} }
 
-    h1{font-size:clamp(1.9rem, 1.2rem + 2.2vw, 2.4rem);line-height:1.15;margin:6px 0 8px}
-    .lead{font-size:1rem;color:rgb(var(--muted));max-width:62ch;margin:0}
+    h1{
+      font-size: var(--fs-hero);
+      line-height: 1.14;
+      margin: 6px 0 8px;
+      letter-spacing: -.2px;
+    }
+    .lead{font-size: var(--fs-body); color: rgb(var(--muted)); max-width: 62ch; margin: 0}
 
-    .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
     .btn{
       display:inline-flex;align-items:center;gap:8px;
-      padding:10px 14px;border-radius:12px;font-weight:700;text-decoration:none;color:#111;
-      background:linear-gradient(135deg, rgba(var(--y),1), rgba(var(--y2),1));
-      box-shadow:0 8px 20px rgba(245,195,0,.28);
-      border:1px solid rgba(0,0,0,.06);
-      transition:transform .06s ease, box-shadow .2s ease;
-      font-size:.95rem;
+      padding:10px 14px;border-radius:12px;font-weight:700;text-decoration:none;
+      font-size:.95rem;color:#111;background:linear-gradient(135deg, rgba(var(--y),1), rgba(var(--y2),1));
+      border:1px solid rgba(0,0,0,.06); box-shadow: var(--shadow-btn);
+      transition: transform .06s ease, box-shadow .2s ease;
     }
-    .btn:hover{transform:translateY(-1px); box-shadow:0 12px 26px rgba(245,195,0,.34)}
-    .btn[aria-disabled="true"]{opacity:.75;cursor:not-allowed}
+    .btn:hover{transform:translateY(-1px); box-shadow:0 12px 26px rgba(245,195,0,.26)}
+    .btn[aria-disabled="true"]{opacity:.78;cursor:not-allowed}
 
-    /* Hero art (no white box, smaller, crisper) */
+    /* Hero art (no white frame, subtle ring) */
     .hero-art{display:grid;place-items:center}
-    .hero-art img{
-      width:220px;max-width:70vw;height:auto;border-radius:20%;
-      box-shadow:
-        0 10px 22px rgba(0,0,0,.14),
-        0 0 0 18px rgba(var(--y), .14);
-      background:transparent;
+    .hero-art .icon-wrap{
+      width: 208px; height: 208px; border-radius: 26%;
+      display:grid; place-items:center;
+      background: conic-gradient(from 140deg, rgba(245,195,0,.12), transparent 30% 70%, rgba(255,225,90,.10));
+      box-shadow: var(--shadow-hero);
     }
+    .hero-art img{width: 164px; height: 164px; border-radius: 24%}
 
     /* Kicker */
-    .kicker{font-size:.8rem;color:rgb(var(--ink));text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+    .kicker{
+      font-size:.8rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px;
+      color: rgb(var(--ink));
+    }
     .kicker::after{
-      content:"";display:inline-block;width:32px;height:6px;border-radius:999px;
-      background:rgba(var(--y),1);margin-left:8px;vertical-align:middle;opacity:.9
+      content:""; display:inline-block; width:30px; height:6px; margin-left:8px; vertical-align:middle;
+      background: rgba(var(--y),1); border-radius:999px; opacity:.9;
     }
 
     /* Cards */
-    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);margin:14px 0 2px}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:14px 0 2px}
     @media (max-width:900px){ .grid{grid-template-columns:1fr 1fr} }
     @media (max-width:620px){ .grid{grid-template-columns:1fr} }
 
     .card{
-      background:rgb(var(--card));
-      border-radius:var(--radius);padding:16px;
-      border:1px solid rgba(0,0,0,.06);
-      box-shadow:0 1px 0 rgba(255,255,255,.55) inset, 0 8px 18px rgba(245,195,0,.10);
+      background: rgb(var(--card));
+      border-radius: var(--radius);
+      padding: 16px;
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: var(--shadow-card);
     }
     .row{display:flex;gap:10px;align-items:flex-start}
     .icon{width:20px;height:20px;flex:0 0 20px}
 
-    .card h3{font-size:1.05rem;margin:0 0 6px}
+    .card h3{font-size: var(--fs-h3); margin: 0 0 6px}
     .card p{margin:0;color:rgb(var(--muted))}
 
-    /* Privacy facts (tight, aligned) */
+    /* Privacy facts (aligned, same size) */
     .facts{display:grid;gap:10px;margin:0;padding:0;list-style:none}
-    .fact{display:flex;gap:8px;align-items:flex-start;font-size:1rem}
+    .fact{display:flex;gap:8px;align-items:flex-start;font-size:var(--fs-body)}
     .fact .label{
-      font-weight:800;font-size:1em;line-height:1.5;flex:0 0 auto;
-      padding:.15rem .5rem;border-radius:999px;background:rgba(var(--y),.18);color:#3d3200
+      font-weight:800; font-size:1em; line-height:1.5; flex:0 0 auto;
+      padding:.15rem .5rem; border-radius:999px; background:rgba(var(--y),.18); color:#3d3200;
     }
-    .fact .body{flex:1;margin:0;font-size:1em;line-height:1.5;color:rgb(var(--muted))}
+    .fact .body{flex:1; margin:0; font-size:1em; line-height:1.5; color:rgb(var(--muted))}
 
     /* Slim support banner */
     .cta-banner{
       margin-top:14px;
       background:linear-gradient(135deg, rgba(var(--y),.10), rgba(var(--y2),.16));
       border:1px solid rgba(0,0,0,.06);
-      border-radius:var(--radius);
-      padding:12px 14px;
-      box-shadow:0 6px 16px rgba(245,195,0,.12);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      box-shadow: 0 6px 16px rgba(245,195,0,.12);
     }
     .cta-banner .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-    .cta-banner h3{margin:0;font-size:1rem;line-height:1.3}
-    .cta-banner p{margin:0;color:rgb(var(--muted));font-size:.95rem}
+    .cta-banner h3{margin:0;font-size:1rem;line-height:1.3;letter-spacing:.1px}
+    .cta-banner p{margin:0;color:rgb(var(--muted));font-size:var(--fs-small)}
     .cta-banner .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
     .cta-banner .btn{padding:8px 12px;border-radius:10px;box-shadow:0 6px 16px rgba(245,195,0,.18);font-weight:700}
     .cta-banner .btn.secondary{background:rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.08)}
 
-    /* Footer (same vertical rhythm) */
-    footer{padding:var(--pad-y) 0;border-top:1px solid rgba(0,0,0,.06)}
-    .footer{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
+    /* Footer */
+    footer{padding: var(--py) 0; border-top:1px solid rgba(0,0,0,.06)}
+    .footer{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
     .links{display:flex;gap:14px;flex-wrap:wrap}
     .links a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(0,0,0,.22);font-size:.95rem}
 
-    /* Entrance */
-    [data-animate]{opacity:0;transform:translateY(6px);animation:fadeUp .55s .08s forwards}
-    .d1{animation-delay:.14s}.d2{animation-delay:.22s}.d3{animation-delay:.30s}
+    /* Focus visibility */
+    :focus-visible{outline: 2px solid rgba(var(--y) / 1); outline-offset: 2px; border-radius: 8px}
+
+    /* Soft entrance (tiny, professional) */
+    [data-animate]{opacity:0;transform:translateY(6px);animation:fadeUp .45s .06s forwards}
+    .d1{animation-delay:.12s}.d2{animation-delay:.18s}.d3{animation-delay:.24s}
     @keyframes fadeUp{to{opacity:1;transform:none}}
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header class="container" aria-label="Top">
     <div class="top">
-      <a class="brand" href="./">
-        <img src="./buzzkill-icon.png" alt="Buzzkill icon">
+      <a class="brand" href="./" aria-label="Buzzkill home">
+        <img src="./buzzkill-icon.png" alt="">
         <span>Buzzkill</span>
       </a>
     </div>
@@ -170,21 +204,26 @@
           Choose the apps, set an interval, and get on-device reminders while you use them.
           You also get a nudge when the daily goal is reached. Private by design. No tracking.
         </p>
+
         <div class="cta d2" data-animate>
+          <!-- Keep as placeholder until App Store is live -->
           <a class="btn" href="#" aria-disabled="true" title="App Store link coming soon">
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             App Store (soon)
           </a>
         </div>
+
         <p class="lead" style="font-size:.95rem;margin-top:10px;color:rgb(var(--muted))">
           Questions? <a href="mailto:somersjens@gmail.com">somersjens@gmail.com</a>
         </p>
       </div>
 
-      <div class="hero-art d3" data-animate>
-        <img src="./buzzkill-icon.png" alt="Buzzkill app icon">
+      <div class="hero-art d3" data-animate aria-hidden="true">
+        <div class="icon-wrap">
+          <img src="./buzzkill-icon.png" alt="">
+        </div>
       </div>
     </section>
 
@@ -253,7 +292,7 @@
         <p style="margin:8px 0 0;color:rgb(var(--muted))">Read the full <a href="./privacy.html">Privacy Policy</a>.</p>
       </div>
 
-      <!-- slim support row -->
+      <!-- Slim support row -->
       <div class="cta-banner" data-animate>
         <div class="wrap">
           <div>
@@ -269,6 +308,7 @@
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="container">
     <div class="footer" aria-label="Footer">
       <div>© <span id="y"></span> Buzzkill</div>
@@ -279,6 +319,8 @@
     </div>
   </footer>
 
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
