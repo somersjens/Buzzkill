@@ -4,30 +4,26 @@
   <meta charset="utf-8">
   <title>Buzzkill — Gentle nudges for mindful app time</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Buzzkill helps you spend less time in specific apps with gentle, on-device nudges powered by Apple's Screen Time APIs.">
+  <meta name="description" content="Buzzkill helps you spend less time in selected apps with on-device reminders using Apple's Screen Time APIs.">
   <meta name="theme-color" content="#F5C300">
 
-  <!-- Icons (place buzzkill-icon.png in repo root) -->
+  <!-- Icons -->
   <link rel="apple-touch-icon" href="./buzzkill-icon.png">
   <link rel="icon" type="image/png" href="./buzzkill-icon.png">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Buzzkill — Gentle nudges for mindful app time">
-  <meta property="og:description" content="Select apps, set a reminder interval, and get lightweight nudges while you use them. Private, on-device, no tracking.">
-  <meta property="og:type" content="website">
   <meta property="og:image" content="./buzzkill-icon.png">
 
   <style>
-    /* Buzzkill yellow / black / white */
+    /* Buzzkill yellow palette */
     :root{
-      --yellow: 245 195 0;     /* #F5C300 */
-      --yellow-2: 255 212 59;  /* softer accent */
+      --yellow: 245 195 0;      /* #F5C300 */
+      --yellow-2: 255 225 90;   /* soft highlight */
       --ink: 17 17 17;
-      --muted: 100 100 100;
+      --muted: 92 92 92;
       --card: 255 255 255;
+      --ring: 255 214 70;
     }
     @media (prefers-color-scheme: dark){
-      :root{ --ink: 240 240 240; --muted: 180 180 180; --card: 20 20 20; }
+      :root{ --ink: 240 240 240; --muted: 176 176 176; --card: 22 22 22; }
     }
 
     *{box-sizing:border-box}
@@ -37,56 +33,81 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color: rgb(var(--ink));
       background:
-        radial-gradient(1100px 600px at 80% -10%, rgba(var(--yellow-2)/.35), transparent 60%),
-        radial-gradient(900px 500px at 0% -20%, rgba(var(--yellow)/.35), transparent 60%),
-        rgb(250 250 250);
+        radial-gradient(1200px 600px at 75% -10%, rgba(var(--yellow-2)/.55), transparent 60%),
+        linear-gradient(180deg, rgba(var(--yellow)/.1), rgba(255 255 255 / 0));
       line-height:1.6;
     }
+
     .container{max-width:1100px;margin:0 auto;padding:24px}
+
+    /* top brand */
     .top{display:flex;justify-content:space-between;align-items:center}
-    .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
-    .brand img{width:40px;height:40px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+    .brand img{width:40px;height:40px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,.18)}
     .brand span{font-weight:850;letter-spacing:.2px}
+
+    /* hero */
     .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;padding:56px 0}
-    @media (max-width:860px){ .hero{grid-template-columns:1fr} }
-    h1{font-size:clamp(2rem, 1.2rem + 3vw, 3.1rem);line-height:1.1;margin:.2em 0}
+    @media (max-width:880px){ .hero{grid-template-columns:1fr} }
+    h1{font-size:clamp(2rem, 1.1rem + 3.2vw, 3.2rem);line-height:1.08;margin:.2em 0}
     .lead{font-size:clamp(1rem, .9rem + .5vw, 1.15rem);color:rgb(var(--muted));max-width:65ch}
+
     .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
     .btn{
       display:inline-flex;align-items:center;gap:10px;
-      padding:12px 18px;border-radius:12px;font-weight:700;text-decoration:none;color:black;
+      padding:12px 18px;border-radius:14px;font-weight:700;text-decoration:none;color:black;
       background: linear-gradient(135deg, rgba(var(--yellow),1), rgba(var(--yellow-2),1));
-      box-shadow: 0 8px 22px rgba(0,0,0,.18);
+      box-shadow: 0 8px 24px rgba(245,195,0,.35);
+      border:1px solid rgba(0,0,0,.06);
       transition: transform .06s ease, box-shadow .2s ease;
     }
-    .btn:hover{transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0,0,0,.22)}
+    .btn:hover{transform: translateY(-1px); box-shadow: 0 12px 30px rgba(245,195,0,.4)}
     .btn.secondary{background: rgba(0,0,0,.06); border:1px solid rgba(0,0,0,.08)}
-    .phone{
-      background: rgb(var(--card)); border:1px solid rgba(0,0,0,.08);
-      border-radius:24px; padding:22px; display:grid; place-items:center;
-      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+
+    /* hero art: pure icon, no white box */
+    .hero-art{display:grid;place-items:center}
+    .hero-art img{
+      width:260px; max-width:80vw; height:auto; border-radius:22%;
+      box-shadow:
+        0 12px 30px rgba(0,0,0,.14),
+        0 0 0 10px rgba(255,255,255,.7),
+        0 0 0 18px rgba(var(--yellow), .15);
+      background: transparent;
     }
-    .phone img{max-width:240px;width:100%;height:auto;border-radius:26%}
-    .kicker{font-size:.85rem;color:rgb(var(--muted));text-transform:uppercase;letter-spacing:.12em}
+
+    /* sections */
+    .kicker{font-size:.85rem;color:rgb(var(--ink));text-transform:uppercase;letter-spacing:.12em}
+    .kicker::after{content:"";display:inline-block;width:44px;height:8px;border-radius:999px;
+      background:rgba(var(--yellow),1);margin-left:10px;vertical-align:middle;opacity:.8}
+
     .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:28px 0 8px}
     @media (max-width:900px){ .grid{grid-template-columns:1fr 1fr} }
     @media (max-width:640px){ .grid{grid-template-columns:1fr} }
+
     .card{
-      background: rgb(var(--card)); border:1px solid rgba(0,0,0,.08);
-      border-radius:18px; padding:20px; box-shadow: 0 6px 20px rgba(0,0,0,.06)
+      background: rgb(var(--card));
+      border-radius:18px; padding:20px;
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,.6) inset,
+        0 10px 24px rgba(245,195,0,.12);
     }
     .row{display:flex;gap:12px;align-items:flex-start}
     .icon{width:22px;height:22px;flex:0 0 22px}
+
     .pill{
       display:inline-block;padding:6px 10px;border-radius:999px;
-      background: rgba(var(--yellow), .15); color:#3d3200; font-weight:700; font-size:.85rem
+      background: rgba(var(--yellow), .18); color:#3d3200; font-weight:700; font-size:.85rem
     }
+
     .footer{
       margin-top:48px;padding:22px 0;border-top:1px solid rgba(0,0,0,.06);
       display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center
     }
     .links{display:flex;gap:18px;flex-wrap:wrap}
     .links a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(0,0,0,.25)}
+
+    /* subtle entrance */
     [data-animate]{opacity:0;transform:translateY(8px);animation:fadeUp .7s .12s forwards}
     .d1{animation-delay:.22s}.d2{animation-delay:.32s}.d3{animation-delay:.42s}
     @keyframes fadeUp{to{opacity:1;transform:none}}
@@ -95,7 +116,7 @@
 <body>
   <header class="container top" aria-label="Top">
     <a class="brand" href="./">
-      <img src="./buzzkill-icon.png" alt="Buzzkill bee icon">
+      <img src="./buzzkill-icon.png" alt="Buzzkill icon">
       <span>Buzzkill</span>
     </a>
   </header>
@@ -105,32 +126,29 @@
       <div>
         <h1 data-animate>Gentle nudges for mindful app time</h1>
         <p class="lead d1" data-animate>
-          Buzzkill helps you spend less time in specific apps using Apple’s Screen Time APIs.
-          Pick the apps that tempt you, set a reminder interval, and get lightweight, on-device
-          notifications while you’re using them—plus a nudge when your daily goal is reached.
-          Private by design. No tracking.
+          Buzzkill helps you spend less time in selected apps using Apple Screen Time APIs.
+          Choose the apps, set a reminder interval, and get on-device notifications while you use them.
+          You also get a nudge when the daily goal is reached. Private by design. No tracking.
         </p>
         <div class="cta d2" data-animate>
-          <!-- App Store placeholder (keep disabled until live) -->
-          <a class="btn" href="#" aria-disabled="true" onclick="return false" title="App Store link coming soon">
+          <a class="btn secondary" href="#" aria-disabled="true" onclick="return false" title="App Store link coming soon">
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             App Store (soon)
           </a>
 
-          <!-- TestFlight public link -->
-          <a class="btn secondary" href="https://testflight.apple.com/join/REPLACE" target="_blank" rel="noopener">
+          <!-- Replace with your real public link -->
+          <a class="btn" href="https://testflight.apple.com/join/REPLACE" target="_blank" rel="noopener">
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M12 5v14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
             Get TestFlight beta
           </a>
         </div>
-        <p class="lead" style="font-size:.98rem;margin-top:12px;color:#6b6b6b">
+        <p class="lead" style="font-size:.98rem;margin-top:12px;color:rgb(var(--muted))">
           Questions? <a href="mailto:somersjens@gmail.com">somersjens@gmail.com</a>
         </p>
       </div>
 
-      <!-- Right column: hero “device” with your icon -->
-      <div class="phone d3" data-animate aria-hidden="true">
-        <img src="./buzzkill-icon.png" alt="">
+      <div class="hero-art d3" data-animate>
+        <img src="./buzzkill-icon.png" alt="Buzzkill app icon">
       </div>
     </section>
 
@@ -143,13 +161,13 @@
               <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
             </svg>
             <div>
-              <h3>Select &amp; focus</h3>
-              <p>Choose apps with the Screen Time picker (<strong>FamilyControls</strong>). Buzzkill monitors only those selections on-device using <strong>DeviceActivity</strong>.</p>
+              <h3>Select and focus</h3>
+              <p>Pick apps with the Screen Time picker (<strong>FamilyControls</strong>). Buzzkill monitors only those choices on device using <strong>DeviceActivity</strong>.</p>
             </div>
           </div>
         </article>
 
-        <article class="card" data-animate class="d1">
+        <article class="card d1" data-animate>
           <div class="row">
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -157,12 +175,12 @@
             </svg>
             <div>
               <h3>Timed nudges</h3>
-              <p>Set an app-specific interval (5, 10, 15, 20, 25, or 30 minutes). Get gentle local notifications while a selected app is in use and when the daily goal is reached.</p>
+              <p>Set an interval per app: 5, 10, 15, 20, 25, or 30 minutes. Get local reminders while the app is in use and when the daily goal is reached.</p>
             </div>
           </div>
         </article>
 
-        <article class="card" data-animate class="d2">
+        <article class="card d2" data-animate>
           <div class="row">
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M4 12a8 8 0 1 0 8-8" stroke="currentColor" stroke-width="1.8" fill="none"/>
@@ -170,7 +188,7 @@
             </svg>
             <div>
               <h3>Dynamic messages</h3>
-              <p>Notifications rotate through engaging prompts and include your total time in that specific app for the day. Choose a tone and language that fits you.</p>
+              <p>Notifications rotate through short prompts and show your total time for that app today. You can pick a tone and a language.</p>
             </div>
           </div>
         </article>
@@ -181,11 +199,11 @@
       <div class="kicker" id="privacy">Privacy at the core</div>
       <div class="card" data-animate>
         <ol>
-          <li><span class="pill">On-device only</span> — all processing stays on the device; permissions in iOS Settings.</li>
-          <li><span class="pill">No blocking</span> — Buzzkill does not block apps; start/stop reminders with one control.</li>
-          <li><span class="pill">No tracking</span> — no screenshots or recordings, no server logs, no analytics SDKs.</li>
+          <li><span class="pill">On-device only</span> All processing stays on the device. Permissions live in iOS Settings.</li>
+          <li><span class="pill">No blocking</span> Buzzkill does not block apps. Start or stop reminders with one control.</li>
+          <li><span class="pill">No tracking</span> No screenshots, no server logs, no analytics SDKs.</li>
         </ol>
-        <p style="margin-top:.5rem;color:#6b6b6b">Read the full <a href="./privacy.html">Privacy Policy</a>.</p>
+        <p style="margin-top:.5rem;color:rgb(var(--muted))">Read the full <a href="./privacy.html">Privacy Policy</a>.</p>
       </div>
     </section>
 
