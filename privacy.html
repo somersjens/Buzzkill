@@ -1,1 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Buzzkill – Privacy Policy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Buzzkill Privacy Policy">
+  <meta name="theme-color" content="#F5C300">
+
+  <!-- Icon -->
+  <link rel="icon" type="image/png" href="./buzzkill-icon.png">
+  <link rel="apple-touch-icon" href="./buzzkill-icon.png">
+
+  <style>
+    /* Same palette and components as index.html */
+    :root{
+      --y: 245 195 0;      /* #F5C300 */
+      --y2: 255 225 90;    /* highlight */
+      --ink: 17 17 17;
+      --muted: 92 92 92;
+      --card: 255 255 255;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --ink: 240 240 240; --muted: 176 176 176; --card: 22 22 22; }
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: rgb(var(--ink));
+      background:
+        radial-gradient(1200px 640px at 80% -10%, rgba(var(--y2)/.55), transparent 60%),
+        linear-gradient(180deg, rgba(var(--y)/.14), rgba(255 255 255 / 0));
+      line-height:1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .top{display:flex;justify-content:space-between;align-items:center}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+    .brand img{width:40px;height:40px;border-radius:10px;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+    .brand span{font-weight:850;letter-spacing:.2px}
+
+    .wrap{max-width:900px;margin:0 auto;padding:18px 2px 28px}
+
+    .card{
+      background: rgb(var(--card));
+      border-radius:18px; padding:22px 20px;
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,.6) inset,
+        0 12px 28px rgba(245,195,0,.14);
+    }
+
+    h1{font-size:clamp(1.9rem, 1.2rem + 2.2vw, 2.5rem);line-height:1.1;margin:.4em 0 .2em}
+    h2{font-size:1.18rem;margin:1.2em 0 .4em}
+    p{margin:.6em 0}
+    ul{margin:.4em 0 .8em 1.1em}
+    li{margin:.3em 0}
+
+    .kicker{font-size:.85rem;color:rgb(var(--ink));text-transform:uppercase;letter-spacing:.12em;margin-top:8px}
+    .kicker::after{content:"";display:inline-block;width:44px;height:8px;border-radius:999px;background:rgba(var(--y),1);margin-left:10px;vertical-align:middle;opacity:.9}
+
+    .badge{
+      display:inline-block;background:rgba(var(--y),.18);color:#3d3200;
+      border-radius:999px;padding:6px 10px;font-weight:800;font-size:.9rem
+    }
+
+    .footer{
+      margin-top:22px;padding-top:16px;border-top:1px solid rgba(0,0,0,.06);
+      display:flex;justify-content:space-between;align-items:center;gap:12px;color:rgb(var(--muted))
+    }
+    .footer a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(0,0,0,.25)}
+  </style>
+</head>
+<body>
+  <!-- Header (matches index) -->
+  <header class="container top" aria-label="Top">
+    <a class="brand" href="./">
+      <img src="./buzzkill-icon.png" alt="Buzzkill icon">
+      <span>Buzzkill</span>
+    </a>
+  </header>
+
+  <main class="container">
+    <div class="wrap">
+      <div class="kicker">Privacy</div>
+      <h1>Privacy Policy</h1>
+      <p><span class="badge">Last updated: October 22, 2025</span></p>
+
+      <div class="card">
+        <p><strong>Buzzkill</strong> helps you spend less time in selected apps using Apple Screen Time APIs. The app is private by design. It processes your selections and usage on your device. It does not send this information to a server.</p>
+
+        <h2>Data We Collect</h2>
+        <p>We do not collect, store, or transmit personal data to our servers. Buzzkill has no backend and no analytics SDKs.</p>
+        <ul>
+          <li><strong>App selections and usage.</strong> Your chosen apps and usage time come from Apple Screen Time and are processed on your device to create local reminder notifications. This information does not leave your device.</li>
+          <li><strong>Notification content.</strong> Notification messages are generated on the device.</li>
+        </ul>
+
+        <h2>System Permissions We Use</h2>
+        <ul>
+          <li><strong>Screen Time (FamilyControls / DeviceActivity):</strong> lets you select apps and allows on-device monitoring of those selected apps only. Required for core features.</li>
+          <li><strong>Notifications:</strong> needed to deliver local reminders.</li>
+        </ul>
+        <p>You can change these permissions in iOS Settings at any time.</p>
+
+        <h2>Data Sharing</h2>
+        <p>We do not share, sell, or disclose your data to third parties.</p>
+
+        <h2>Data Retention</h2>
+        <p>Buzzkill does not maintain a cloud account or store personal data on a server. Settings you configure (such as selected apps, intervals, tone, language) are stored locally on your device and can be removed by deleting the app.</p>
+
+        <h2>Crash Reports and Diagnostics</h2>
+        <p>If you use <strong>TestFlight</strong>, Apple may collect crash logs and diagnostic information and share them with the developer through Apple’s tools. These reports are managed by Apple under Apple’s privacy policy. Buzzkill does not include third-party crash or analytics frameworks.</p>
+
+        <h2>Children’s Privacy</h2>
+        <p>Buzzkill is intended for individuals who are at least 13 years old, or the minimum age required in your jurisdiction. If you believe a child provided data to us through Apple channels, contact us and we will work with Apple to address it.</p>
+
+        <h2>Security</h2>
+        <p>All processing occurs on your device. We do not operate servers that hold your data.</p>
+
+        <h2>International Transfers</h2>
+        <p>We do not transfer your data internationally because we do not transmit it off your device.</p>
+
+        <h2>Your Rights</h2>
+        <p>Your rights may vary by location. Because Buzzkill does not collect or store personal data on servers, most requests can be handled by changing permissions in iOS Settings or uninstalling the app. If you have questions, contact us.</p>
+
+        <h2>Changes to This Policy</h2>
+        <p>We may update this policy as the app evolves. Material changes will appear on this page with a new “Last updated” date.</p>
+
+        <h2>Contact</h2>
+        <p>Email: <a href="mailto:somersjens@gmail.com">somersjens@gmail.com</a></p>
+      </div>
+
+      <div class="footer">
+        <span>© <span id="y"></span> Buzzkill</span>
+        <a href="./">Back to site</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
 
