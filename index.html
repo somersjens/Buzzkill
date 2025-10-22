@@ -10,17 +10,18 @@
   <!-- Icons -->
   <link rel="apple-touch-icon" href="./buzzkill-icon.png">
   <link rel="icon" type="image/png" href="./buzzkill-icon.png">
+  <meta property="og:title" content="Buzzkill — Gentle nudges for mindful app time">
+  <meta property="og:description" content="Pick apps, set an interval, get gentle nudges. Private by design.">
   <meta property="og:image" content="./buzzkill-icon.png">
 
   <style>
     /* Buzzkill yellow palette */
     :root{
-      --yellow: 245 195 0;      /* #F5C300 */
-      --yellow-2: 255 225 90;   /* soft highlight */
+      --y: 245 195 0;      /* #F5C300 */
+      --y2: 255 225 90;    /* soft highlight */
       --ink: 17 17 17;
       --muted: 92 92 92;
       --card: 255 255 255;
-      --ring: 255 214 70;
     }
     @media (prefers-color-scheme: dark){
       :root{ --ink: 240 240 240; --muted: 176 176 176; --card: 22 22 22; }
@@ -33,52 +34,53 @@
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color: rgb(var(--ink));
       background:
-        radial-gradient(1200px 600px at 75% -10%, rgba(var(--yellow-2)/.55), transparent 60%),
-        linear-gradient(180deg, rgba(var(--yellow)/.1), rgba(255 255 255 / 0));
+        radial-gradient(1200px 640px at 80% -10%, rgba(var(--y2)/.55), transparent 60%),
+        linear-gradient(180deg, rgba(var(--y)/.14), rgba(255 255 255 / 0));
       line-height:1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     .container{max-width:1100px;margin:0 auto;padding:24px}
 
-    /* top brand */
+    /* top */
     .top{display:flex;justify-content:space-between;align-items:center}
     .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
-    .brand img{width:40px;height:40px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+    .brand img{width:40px;height:40px;border-radius:10px;box-shadow:0 8px 22px rgba(0,0,0,.18)}
     .brand span{font-weight:850;letter-spacing:.2px}
 
     /* hero */
     .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;padding:56px 0}
     @media (max-width:880px){ .hero{grid-template-columns:1fr} }
-    h1{font-size:clamp(2rem, 1.1rem + 3.2vw, 3.2rem);line-height:1.08;margin:.2em 0}
+    h1{font-size:clamp(2rem, 1.1rem + 3.2vw, 3.2rem);line-height:1.06;margin:.2em 0}
     .lead{font-size:clamp(1rem, .9rem + .5vw, 1.15rem);color:rgb(var(--muted));max-width:65ch}
 
     .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
     .btn{
       display:inline-flex;align-items:center;gap:10px;
       padding:12px 18px;border-radius:14px;font-weight:700;text-decoration:none;color:black;
-      background: linear-gradient(135deg, rgba(var(--yellow),1), rgba(var(--yellow-2),1));
-      box-shadow: 0 8px 24px rgba(245,195,0,.35);
+      background: linear-gradient(135deg, rgba(var(--y),1), rgba(var(--y2),1));
+      box-shadow: 0 10px 28px rgba(245,195,0,.38);
       border:1px solid rgba(0,0,0,.06);
       transition: transform .06s ease, box-shadow .2s ease;
     }
-    .btn:hover{transform: translateY(-1px); box-shadow: 0 12px 30px rgba(245,195,0,.4)}
-    .btn.secondary{background: rgba(0,0,0,.06); border:1px solid rgba(0,0,0,.08)}
+    .btn:hover{transform: translateY(-1px); box-shadow: 0 14px 36px rgba(245,195,0,.42)}
+    .btn[aria-disabled="true"]{opacity:.75;cursor:not-allowed}
 
-    /* hero art: pure icon, no white box */
+    /* hero art: bare icon, soft yellow ring */
     .hero-art{display:grid;place-items:center}
     .hero-art img{
-      width:260px; max-width:80vw; height:auto; border-radius:22%;
+      width:280px; max-width:80vw; height:auto; border-radius:22%;
       box-shadow:
-        0 12px 30px rgba(0,0,0,.14),
-        0 0 0 10px rgba(255,255,255,.7),
-        0 0 0 18px rgba(var(--yellow), .15);
+        0 16px 36px rgba(0,0,0,.16),
+        0 0 0 14px rgba(255,255,255,.85),
+        0 0 0 26px rgba(var(--y), .18);
       background: transparent;
     }
 
     /* sections */
     .kicker{font-size:.85rem;color:rgb(var(--ink));text-transform:uppercase;letter-spacing:.12em}
-    .kicker::after{content:"";display:inline-block;width:44px;height:8px;border-radius:999px;
-      background:rgba(var(--yellow),1);margin-left:10px;vertical-align:middle;opacity:.8}
+    .kicker::after{content:"";display:inline-block;width:44px;height:8px;border-radius:999px;background:rgba(var(--y),1);margin-left:10px;vertical-align:middle;opacity:.9}
 
     .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:28px 0 8px}
     @media (max-width:900px){ .grid{grid-template-columns:1fr 1fr} }
@@ -90,24 +92,24 @@
       border:1px solid rgba(0,0,0,.06);
       box-shadow:
         0 1px 0 rgba(255,255,255,.6) inset,
-        0 10px 24px rgba(245,195,0,.12);
+        0 12px 28px rgba(245,195,0,.14);
     }
     .row{display:flex;gap:12px;align-items:flex-start}
     .icon{width:22px;height:22px;flex:0 0 22px}
 
     .pill{
       display:inline-block;padding:6px 10px;border-radius:999px;
-      background: rgba(var(--yellow), .18); color:#3d3200; font-weight:700; font-size:.85rem
+      background: rgba(var(--y), .2); color:#3d3200; font-weight:700; font-size:.85rem
     }
 
     .footer{
-      margin-top:48px;padding:22px 0;border-top:1px solid rgba(0,0,0,.06);
+      margin-top:56px;padding:22px 0;border-top:1px solid rgba(0,0,0,.06);
       display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center
     }
     .links{display:flex;gap:18px;flex-wrap:wrap}
     .links a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(0,0,0,.25)}
 
-    /* subtle entrance */
+    /* entrance */
     [data-animate]{opacity:0;transform:translateY(8px);animation:fadeUp .7s .12s forwards}
     .d1{animation-delay:.22s}.d2{animation-delay:.32s}.d3{animation-delay:.42s}
     @keyframes fadeUp{to{opacity:1;transform:none}}
@@ -127,19 +129,16 @@
         <h1 data-animate>Gentle nudges for mindful app time</h1>
         <p class="lead d1" data-animate>
           Buzzkill helps you spend less time in selected apps using Apple Screen Time APIs.
-          Choose the apps, set a reminder interval, and get on-device notifications while you use them.
+          Choose the apps, set an interval, and get on-device reminders while you use them.
           You also get a nudge when the daily goal is reached. Private by design. No tracking.
         </p>
         <div class="cta d2" data-animate>
-          <a class="btn secondary" href="#" aria-disabled="true" onclick="return false" title="App Store link coming soon">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <!-- Keep as a placeholder until the App Store link is live -->
+          <a class="btn" href="#" aria-disabled="true" title="App Store link coming soon">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
             App Store (soon)
-          </a>
-
-          <!-- Replace with your real public link -->
-          <a class="btn" href="https://testflight.apple.com/join/REPLACE" target="_blank" rel="noopener">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M12 5v14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            Get TestFlight beta
           </a>
         </div>
         <p class="lead" style="font-size:.98rem;margin-top:12px;color:rgb(var(--muted))">
@@ -212,19 +211,12 @@
       <nav class="links" aria-label="Footer links">
         <a href="./privacy.html">Privacy</a>
         <a href="mailto:somersjens@gmail.com">Contact</a>
-        <a href="https://testflight.apple.com/join/REPLACE" target="_blank" rel="noopener">TestFlight</a>
       </nav>
     </footer>
   </main>
 
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
-    document.querySelectorAll('a[aria-disabled="true"]').forEach(a=>{
-      a.addEventListener('click', e=>e.preventDefault());
-      a.setAttribute('tabindex','-1');
-      a.setAttribute('title','Coming soon');
-      a.style.opacity = .7; a.style.cursor = 'not-allowed';
-    });
   </script>
 </body>
 </html>
