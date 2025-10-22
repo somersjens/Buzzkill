@@ -15,119 +15,138 @@
   <meta property="og:image" content="./buzzkill-icon.png">
 
   <style>
-    /* Buzzkill yellow */
+    /* Palette */
     :root{
       --y: 245 195 0;      /* #F5C300 */
       --y2: 255 225 90;    /* highlight */
       --ink: 17 17 17;
       --muted: 92 92 92;
       --card: 255 255 255;
+      --bg: 250 250 250;
+      --ring: 245 195 0;
+      --radius: 18px;
+      --radius-lg: 24px;
+      --space: 24px;
+      --space-lg: 56px;
     }
     @media (prefers-color-scheme: dark){
-      :root{ --ink: 240 240 240; --muted: 176 176 176; --card: 22 22 22; }
+      :root{ --ink: 240 240 240; --muted: 176 176 176; --card: 24 24 24; --bg: 10 10 10 }
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
       color: rgb(var(--ink));
       background:
         radial-gradient(1200px 640px at 80% -10%, rgba(var(--y2)/.55), transparent 60%),
-        linear-gradient(180deg, rgba(var(--y)/.14), rgba(255 255 255 / 0));
+        linear-gradient(180deg, rgba(var(--y)/.14), rgba(255 255 255 / 0)),
+        rgb(var(--bg));
       line-height:1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
-    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .container{max-width:1100px;margin:0 auto;padding:var(--space)}
 
-    /* top */
+    /* Header */
     .top{display:flex;justify-content:space-between;align-items:center}
     .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
     .brand img{width:40px;height:40px;border-radius:10px;box-shadow:0 8px 22px rgba(0,0,0,.18)}
     .brand span{font-weight:850;letter-spacing:.2px}
 
-    /* hero */
-    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;padding:56px 0}
+    /* Sections */
+    section{padding: var(--space-lg) 0}
+    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center}
     @media (max-width:880px){ .hero{grid-template-columns:1fr} }
-    h1{font-size:clamp(2rem, 1.1rem + 3.2vw, 3.2rem);line-height:1.06;margin:.2em 0}
-    .lead{font-size:clamp(1rem, .9rem + .5vw, 1.15rem);color:rgb(var(--muted));max-width:65ch}
+
+    h1{font-size:clamp(2rem,1.1rem + 3.2vw,3.2rem);line-height:1.06;margin:.2em 0}
+    .lead{font-size:clamp(1rem,.9rem + .5vw,1.15rem);color:rgb(var(--muted));max-width:65ch}
 
     .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
     .btn{
       display:inline-flex;align-items:center;gap:10px;
       padding:12px 18px;border-radius:14px;font-weight:700;text-decoration:none;color:black;
-      background: linear-gradient(135deg, rgba(var(--y),1), rgba(var(--y2),1));
-      box-shadow: 0 10px 28px rgba(245,195,0,.38);
+      background:linear-gradient(135deg, rgba(var(--y),1), rgba(var(--y2),1));
+      box-shadow:0 10px 28px rgba(245,195,0,.38);
       border:1px solid rgba(0,0,0,.06);
-      transition: transform .06s ease, box-shadow .2s ease;
+      transition:transform .06s ease, box-shadow .2s ease;
     }
-    .btn:hover{transform: translateY(-1px); box-shadow: 0 14px 36px rgba(245,195,0,.42)}
+    .btn:hover{transform:translateY(-1px); box-shadow:0 14px 36px rgba(245,195,0,.42)}
     .btn[aria-disabled="true"]{opacity:.75;cursor:not-allowed}
 
-    /* hero art: bare icon, soft yellow ring */
+    /* Hero art */
     .hero-art{display:grid;place-items:center}
     .hero-art img{
-      width:280px; max-width:80vw; height:auto; border-radius:22%;
+      width:280px;max-width:80vw;height:auto;border-radius:22%;
       box-shadow:
         0 16px 36px rgba(0,0,0,.16),
         0 0 0 14px rgba(255,255,255,.85),
         0 0 0 26px rgba(var(--y), .18);
-      background: transparent;
+      background:transparent;
     }
 
-    /* sections */
+    /* Kicker */
     .kicker{font-size:.85rem;color:rgb(var(--ink));text-transform:uppercase;letter-spacing:.12em}
-    .kicker::after{content:"";display:inline-block;width:44px;height:8px;border-radius:999px;background:rgba(var(--y),1);margin-left:10px;vertical-align:middle;opacity:.9}
+    .kicker::after{
+      content:"";display:inline-block;width:44px;height:8px;border-radius:999px;
+      background:rgba(var(--y),1);margin-left:10px;vertical-align:middle;opacity:.9
+    }
 
+    /* Cards grid */
     .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:28px 0 8px}
     @media (max-width:900px){ .grid{grid-template-columns:1fr 1fr} }
     @media (max-width:640px){ .grid{grid-template-columns:1fr} }
 
     .card{
-      background: rgb(var(--card));
-      border-radius:18px; padding:20px;
+      background:rgb(var(--card));
+      border-radius:var(--radius);padding:20px;
       border:1px solid rgba(0,0,0,.06);
-      box-shadow:
-        0 1px 0 rgba(255,255,255,.6) inset,
-        0 12px 28px rgba(245,195,0,.14);
+      box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 12px 28px rgba(245,195,0,.14);
     }
     .row{display:flex;gap:12px;align-items:flex-start}
     .icon{width:22px;height:22px;flex:0 0 22px}
 
-    .pill{
-      display:inline-block;padding:6px 10px;border-radius:999px;
-      background: rgba(var(--y), .2); color:#3d3200; font-weight:700; font-size:.85rem
-    }
-
-    /* privacy facts: consistent sizing */
-    .facts{display:grid;gap:10px;margin:0;padding:0;list-style:none}
-    .fact{
-      display:flex;gap:10px;align-items:flex-start;
-      font-size:1rem; line-height:1.6; color:rgb(var(--ink));
-    }
+    /* Privacy facts — consistent font sizes */
+    .facts{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+    .fact{display:flex;gap:10px;align-items:flex-start;font-size:1rem;line-height:1.6}
     .fact .label{
-      font-weight:800; flex:0 0 auto;
-      /* same size as body, no shrinking */
-      font-size:1em; line-height:1.6;
-      padding:0.15rem 0.55rem; border-radius:999px;
-      background: rgba(var(--y), .18); color:#3d3200;
+      font-weight:800;font-size:1em;line-height:1.6;flex:0 0 auto;
+      padding:.2rem .6rem;border-radius:999px;background:rgba(var(--y),.18);color:#3d3200
     }
-    .fact .body{
-      flex:1 1 auto; margin:0;
-      font-size:1em; line-height:1.6; color:rgb(var(--muted));
-    }
+    .fact .body{flex:1 1 auto;margin:0;font-size:1em;line-height:1.6;color:rgb(var(--muted))}
 
-    .footer{
-      margin-top:56px;padding:22px 0;border-top:1px solid rgba(0,0,0,.06);
-      display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center
+    /* Support banner below privacy */
+    .cta-banner{
+      margin-top:22px;
+      background:linear-gradient(135deg, rgba(var(--y),.14), rgba(var(--y2),.22));
+      border:1px solid rgba(0,0,0,.06);
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:0 10px 26px rgba(245,195,0,.16);
     }
+    .cta-banner .wrap{display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .cta-banner h3{margin:0 0 6px 0;font-size:1.15rem;line-height:1.3}
+    .cta-banner p{margin:0;color:rgb(var(--muted))}
+    .cta-banner .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+    .cta-banner .btn{
+      background:linear-gradient(135deg, rgba(var(--y),1), rgba(var(--y2),1));
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow:0 8px 22px rgba(245,195,0,.28);
+    }
+    .cta-banner .btn.secondary{background:rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.08)}
+
+    /* Extra spacing under the privacy block for better balance */
+    .section-privacy{padding-bottom: calc(var(--space-lg) + 26px);} /* <— extra padding */
+
+    /* Footer */
+    footer{padding: var(--space-lg) 0 var(--space); border-top:1px solid rgba(0,0,0,.06)}
+    .footer{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
     .links{display:flex;gap:18px;flex-wrap:wrap}
     .links a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(0,0,0,.25)}
 
-    /* entrance */
+    /* Entrance */
     [data-animate]{opacity:0;transform:translateY(8px);animation:fadeUp .7s .12s forwards}
     .d1{animation-delay:.22s}.d2{animation-delay:.32s}.d3{animation-delay:.42s}
     @keyframes fadeUp{to{opacity:1;transform:none}}
@@ -142,6 +161,7 @@
   </header>
 
   <main class="container">
+    <!-- HERO -->
     <section class="hero">
       <div>
         <h1 data-animate>Gentle nudges for mindful app time</h1>
@@ -151,7 +171,6 @@
           You also get a nudge when the daily goal is reached. Private by design. No tracking.
         </p>
         <div class="cta d2" data-animate>
-          <!-- Keep as a placeholder until the App Store link is live -->
           <a class="btn" href="#" aria-disabled="true" title="App Store link coming soon">
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -169,6 +188,7 @@
       </div>
     </section>
 
+    <!-- FEATURES -->
     <section aria-labelledby="features">
       <div class="kicker" id="features">Features</div>
       <div class="grid">
@@ -212,7 +232,8 @@
       </div>
     </section>
 
-    <section aria-labelledby="privacy">
+    <!-- PRIVACY -->
+    <section aria-labelledby="privacy" class="section-privacy">
       <div class="kicker" id="privacy">Privacy at the core</div>
       <div class="card" data-animate>
         <ul class="facts">
@@ -229,18 +250,36 @@
             <p class="body">No screenshots, no server logs, no analytics SDKs.</p>
           </li>
         </ul>
-        <p style="margin-top:.5rem;color:rgb(var(--muted))">Read the full <a href="./privacy.html">Privacy Policy</a>.</p>
+        <p style="margin-top:.6rem;color:rgb(var(--muted))">Read the full <a href="./privacy.html">Privacy Policy</a>.</p>
       </div>
-    </section>
 
-    <footer class="footer" aria-label="Footer">
+      <!-- Support banner (kept simple; sits below privacy) -->
+      <div class="cta-banner" data-animate>
+        <div class="wrap">
+          <div>
+            <h3>Questions or feedback?</h3>
+            <p>Say hello, report an issue, or suggest a feature.</p>
+            <div class="actions">
+              <a class="btn" href="mailto:somersjens@gmail.com">Email support</a>
+              <a class="btn secondary" href="./privacy.html">Privacy policy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- extra padding comes from .section-privacy -->
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="container">
+    <div class="footer" aria-label="Footer">
       <div>© <span id="y"></span> Buzzkill</div>
       <nav class="links" aria-label="Footer links">
         <a href="./privacy.html">Privacy</a>
         <a href="mailto:somersjens@gmail.com">Contact</a>
       </nav>
-    </footer>
-  </main>
+    </div>
+  </footer>
 
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
