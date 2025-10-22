@@ -15,10 +15,10 @@
   <meta property="og:image" content="./buzzkill-icon.png">
 
   <style>
-    /* Buzzkill yellow palette */
+    /* Buzzkill yellow */
     :root{
       --y: 245 195 0;      /* #F5C300 */
-      --y2: 255 225 90;    /* soft highlight */
+      --y2: 255 225 90;    /* highlight */
       --ink: 17 17 17;
       --muted: 92 92 92;
       --card: 255 255 255;
@@ -100,6 +100,24 @@
     .pill{
       display:inline-block;padding:6px 10px;border-radius:999px;
       background: rgba(var(--y), .2); color:#3d3200; font-weight:700; font-size:.85rem
+    }
+
+    /* privacy facts: consistent sizing */
+    .facts{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+    .fact{
+      display:flex;gap:10px;align-items:flex-start;
+      font-size:1rem; line-height:1.6; color:rgb(var(--ink));
+    }
+    .fact .label{
+      font-weight:800; flex:0 0 auto;
+      /* same size as body, no shrinking */
+      font-size:1em; line-height:1.6;
+      padding:0.15rem 0.55rem; border-radius:999px;
+      background: rgba(var(--y), .18); color:#3d3200;
+    }
+    .fact .body{
+      flex:1 1 auto; margin:0;
+      font-size:1em; line-height:1.6; color:rgb(var(--muted));
     }
 
     .footer{
@@ -197,11 +215,20 @@
     <section aria-labelledby="privacy">
       <div class="kicker" id="privacy">Privacy at the core</div>
       <div class="card" data-animate>
-        <ol>
-          <li><span class="pill">On-device only</span> All processing stays on the device. Permissions live in iOS Settings.</li>
-          <li><span class="pill">No blocking</span> Buzzkill does not block apps. Start or stop reminders with one control.</li>
-          <li><span class="pill">No tracking</span> No screenshots, no server logs, no analytics SDKs.</li>
-        </ol>
+        <ul class="facts">
+          <li class="fact">
+            <span class="label">On-device only</span>
+            <p class="body">All processing stays on the device. Permissions live in iOS Settings.</p>
+          </li>
+          <li class="fact">
+            <span class="label">No blocking</span>
+            <p class="body">Buzzkill does not block apps. Start or stop reminders with one control.</p>
+          </li>
+          <li class="fact">
+            <span class="label">No tracking</span>
+            <p class="body">No screenshots, no server logs, no analytics SDKs.</p>
+          </li>
+        </ul>
         <p style="margin-top:.5rem;color:rgb(var(--muted))">Read the full <a href="./privacy.html">Privacy Policy</a>.</p>
       </div>
     </section>
