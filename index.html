@@ -7,7 +7,7 @@
   <meta name="description" content="Buzzkill helps you spend less time in specific apps with gentle, on-device nudges powered by Apple's Screen Time APIs.">
   <meta name="theme-color" content="#F5C300">
 
-  <!-- Icons (put your image at ./buzzkill-icon.png) -->
+  <!-- Icons (place buzzkill-icon.png in repo root) -->
   <link rel="apple-touch-icon" href="./buzzkill-icon.png">
   <link rel="icon" type="image/png" href="./buzzkill-icon.png">
 
@@ -18,21 +18,16 @@
   <meta property="og:image" content="./buzzkill-icon.png">
 
   <style>
-    /* Colorway based on your icon */
+    /* Buzzkill yellow / black / white */
     :root{
-      --yellow: 245 195 0;     /* #F5C300 (primary) */
+      --yellow: 245 195 0;     /* #F5C300 */
       --yellow-2: 255 212 59;  /* softer accent */
-      --black: 17 17 17;       /* near-black */
-      --white: 255 255 255;
+      --ink: 17 17 17;
       --muted: 100 100 100;
       --card: 255 255 255;
     }
     @media (prefers-color-scheme: dark){
-      :root{
-        --black: 240 240 240;   /* text flips to light */
-        --muted: 180 180 180;
-        --card: 20 20 20;
-      }
+      :root{ --ink: 240 240 240; --muted: 180 180 180; --card: 20 20 20; }
     }
 
     *{box-sizing:border-box}
@@ -40,7 +35,7 @@
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: rgb(var(--black));
+      color: rgb(var(--ink));
       background:
         radial-gradient(1100px 600px at 80% -10%, rgba(var(--yellow-2)/.35), transparent 60%),
         radial-gradient(900px 500px at 0% -20%, rgba(var(--yellow)/.35), transparent 60%),
@@ -52,9 +47,7 @@
     .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
     .brand img{width:40px;height:40px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.18)}
     .brand span{font-weight:850;letter-spacing:.2px}
-    .hero{
-      display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;padding:56px 0
-    }
+    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;padding:56px 0}
     @media (max-width:860px){ .hero{grid-template-columns:1fr} }
     h1{font-size:clamp(2rem, 1.2rem + 3vw, 3.1rem);line-height:1.1;margin:.2em 0}
     .lead{font-size:clamp(1rem, .9rem + .5vw, 1.15rem);color:rgb(var(--muted));max-width:65ch}
@@ -67,9 +60,7 @@
       transition: transform .06s ease, box-shadow .2s ease;
     }
     .btn:hover{transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0,0,0,.22)}
-    .btn.secondary{
-      background: rgba(0,0,0,.06); border:1px solid rgba(0,0,0,.08)
-    }
+    .btn.secondary{background: rgba(0,0,0,.06); border:1px solid rgba(0,0,0,.08)}
     .phone{
       background: rgb(var(--card)); border:1px solid rgba(0,0,0,.08);
       border-radius:24px; padding:22px; display:grid; place-items:center;
@@ -104,7 +95,7 @@
 <body>
   <header class="container top" aria-label="Top">
     <a class="brand" href="./">
-      <img src="./assets/buzzkill-icon.png" alt="Buzzkill bee icon">
+      <img src="./buzzkill-icon.png" alt="Buzzkill bee icon">
       <span>Buzzkill</span>
     </a>
   </header>
@@ -120,13 +111,16 @@
           Private by design. No tracking.
         </p>
         <div class="cta d2" data-animate>
+          <!-- App Store placeholder (keep disabled until live) -->
           <a class="btn" href="#" aria-disabled="true" onclick="return false" title="App Store link coming soon">
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             App Store (soon)
           </a>
-          <a class="btn secondary" href="#" aria-disabled="true" onclick="return false" title="TestFlight coming soon">
+
+          <!-- TestFlight public link -->
+          <a class="btn secondary" href="https://testflight.apple.com/join/REPLACE" target="_blank" rel="noopener">
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M12 5v14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-            TestFlight (soon)
+            Get TestFlight beta
           </a>
         </div>
         <p class="lead" style="font-size:.98rem;margin-top:12px;color:#6b6b6b">
@@ -200,7 +194,7 @@
       <nav class="links" aria-label="Footer links">
         <a href="./privacy.html">Privacy</a>
         <a href="mailto:somersjens@gmail.com">Contact</a>
-        <a href="#" aria-disabled="true" onclick="return false">Press Kit (soon)</a>
+        <a href="https://testflight.apple.com/join/REPLACE" target="_blank" rel="noopener">TestFlight</a>
       </nav>
     </footer>
   </main>
