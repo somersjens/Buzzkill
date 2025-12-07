@@ -1,445 +1,326 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Buzzkill – Stay Focused</title>
+  <meta charset="utf-8">
+  <title>Buzzkill — Gentle nudges for mindful app time</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Buzzkill helps you spend less time in selected apps with on-device reminders using Apple's Screen Time APIs.">
+  <meta name="theme-color" content="#F5C300">
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" href="./buzzkill-icon.png">
+  <link rel="apple-touch-icon" href="./buzzkill-icon.png">
+  <meta property="og:title" content="Buzzkill — Gentle nudges for mindful app time">
+  <meta property="og:description" content="Pick apps, set an interval, get gentle nudges. Private by design.">
+  <meta property="og:image" content="./buzzkill-icon.png">
+
   <style>
-    :root {
-      --bee-gold: #ffcc00;
-      --bee-orange: #ff9f1c;
-      --jet-black: #0c0c0c;
-      --ink: #111218;
-      --cream: #fff6e5;
-      --card-bg: rgba(17, 18, 24, 0.72);
-      --card-border: rgba(255, 204, 0, 0.25);
-      --glow: 0 10px 35px rgba(255, 159, 28, 0.35);
-      color-scheme: dark;
+    /* === Design tokens: compact, professional === */
+    :root{
+      /* Colors */
+      --y: 245 195 0;     /* primary yellow */
+      --y2: 255 225 90;   /* soft yellow */
+      --ink: 22 22 22;    /* body text */
+      --muted: 112 112 112;
+      --card: 255 255 255;
+      --bg: 252 252 252;
+
+      /* Layout */
+      --container: 920px;   /* tighter for a pro look */
+      --px: 16px;           /* page side padding */
+      --py: 28px;           /* section vertical rhythm (compact) */
+      --radius: 14px;
+
+      /* Type scale (optical, compact) */
+      --fs-hero: clamp(1.9rem, 1.2rem + 2.2vw, 2.35rem);
+      --fs-h3: 1.05rem;
+      --fs-body: 1rem;
+      --fs-small: .94rem;
+
+      /* Effects */
+      --shadow-card: 0 1px 0 rgba(255,255,255,.55) inset, 0 8px 18px rgba(245,195,0,.10);
+      --shadow-btn: 0 8px 20px rgba(245,195,0,.20);
+      --shadow-hero: 0 10px 22px rgba(0,0,0,.12), 0 0 0 18px rgba(245,195,0,.12);
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --ink: 235 235 235; --muted: 170 170 170; --card: 26 26 26; --bg: 10 10 10 }
     }
 
-    * {
-      box-sizing: border-box;
+    /* Base */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size: 16px;
+      line-height: 1.55;
+      color: rgb(var(--ink));
+      background:
+        radial-gradient(780px 420px at 82% -8%, rgba(var(--y2)/.45), transparent 60%),
+        linear-gradient(180deg, rgba(var(--y)/.10), rgba(255 255 255 / 0)),
+        rgb(var(--bg));
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+    img{display:block;max-width:100%;height:auto}
+    a{color:inherit}
 
-    body {
-      margin: 0;
-      font-family: "Inter", "SF Pro Display", "Segoe UI", system-ui, -apple-system, sans-serif;
-      background: radial-gradient(circle at 20% 20%, rgba(255, 204, 0, 0.12), transparent 30%),
-        radial-gradient(circle at 80% 0%, rgba(255, 159, 28, 0.12), transparent 30%),
-        linear-gradient(145deg, #0b0d12 0%, #0f1018 50%, #0b0d12 100%);
-      color: #f7f8fb;
-      overflow-x: hidden;
-    }
+    .container{max-width:var(--container); margin:0 auto; padding:0 var(--px)}
+    header{padding:10px 0}
+    .top{display:flex;justify-content:space-between;align-items:center}
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(16px);
-      background: rgba(12, 12, 12, 0.85);
-      border-bottom: 1px solid rgba(255, 204, 0, 0.22);
-    }
+    /* Brand */
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .brand img{width:32px;height:32px;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,.15)}
+    .brand span{font-weight:800;letter-spacing:.15px;font-size:15px}
 
-    nav {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
+    /* Sections */
+    section{padding: var(--py) 0}
 
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-      color: var(--bee-gold);
-      text-transform: uppercase;
-    }
-
-    .brand .mark {
-      width: 40px;
-      height: 40px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--bee-gold), var(--bee-orange));
-      color: var(--jet-black);
-      border-radius: 12px;
-      box-shadow: 0 0 0 6px rgba(255, 204, 0, 0.08), 0 12px 30px rgba(0, 0, 0, 0.45);
-      font-size: 20px;
-      font-weight: 900;
-      transform: rotate(-8deg);
-      animation: pulse 3s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: rotate(-8deg) scale(1); box-shadow: 0 0 0 6px rgba(255, 204, 0, 0.08), var(--glow); }
-      50% { transform: rotate(-8deg) scale(1.06); box-shadow: 0 0 0 12px rgba(255, 204, 0, 0.04), var(--glow); }
-    }
-
-    .cta {
-      background: linear-gradient(120deg, var(--bee-gold), var(--bee-orange));
-      color: var(--jet-black);
-      padding: 12px 20px;
-      border-radius: 999px;
-      font-weight: 700;
-      text-decoration: none;
-      box-shadow: var(--glow);
-      transition: transform 220ms ease, box-shadow 220ms ease;
-    }
-
-    .cta:hover {
-      transform: translateY(-2px) scale(1.01);
-      box-shadow: 0 16px 40px rgba(255, 204, 0, 0.45);
-    }
-
-    main {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 48px 24px 96px;
-      display: flex;
-      flex-direction: column;
-      gap: 72px;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      align-items: center;
-      gap: 32px;
-      margin-top: 32px;
-    }
-
-    h1 {
-      font-size: clamp(34px, 4vw, 52px);
-      margin: 0 0 12px;
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-    }
-
-    .tagline {
-      color: #d5d9e5;
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-
-    .glass {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
-    }
-
-    .hero-card {
-      position: relative;
-      overflow: hidden;
-      isolation: isolate;
-    }
-
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 20% 20%, rgba(255, 204, 0, 0.14), transparent 35%),
-        radial-gradient(circle at 80% 0%, rgba(255, 159, 28, 0.12), transparent 40%);
-      z-index: -1;
-    }
-
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .metric {
-      padding: 14px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .metric strong { color: var(--bee-gold); }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255, 204, 0, 0.08);
-      border: 1px solid rgba(255, 204, 0, 0.25);
-      color: #f7f8fb;
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-weight: 600;
-      margin-top: 8px;
-      box-shadow: 0 10px 25px rgba(255, 204, 0, 0.18);
-    }
-
-    section h2 {
-      margin: 0 0 12px;
-      font-size: 30px;
-      letter-spacing: -0.01em;
-    }
-
-    section p { color: #d5d9e5; margin-top: 0; }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    /* Hero */
+    .hero{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
       gap: 18px;
+      align-items: center;
+    }
+    @media (max-width:860px){ .hero{grid-template-columns:1fr} }
+
+    h1{
+      font-size: var(--fs-hero);
+      line-height: 1.14;
+      margin: 6px 0 8px;
+      letter-spacing: -.2px;
+    }
+    .lead{font-size: var(--fs-body); color: rgb(var(--muted)); max-width: 62ch; margin: 0}
+
+    .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 14px;border-radius:12px;font-weight:700;text-decoration:none;
+      font-size:.95rem;color:#111;background:linear-gradient(135deg, rgba(var(--y),1), rgba(var(--y2),1));
+      border:1px solid rgba(0,0,0,.06); box-shadow: var(--shadow-btn);
+      transition: transform .06s ease, box-shadow .2s ease;
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow:0 12px 26px rgba(245,195,0,.26)}
+    .btn[aria-disabled="true"]{opacity:.78;cursor:not-allowed}
+
+    /* Hero art (no white frame, subtle ring) */
+    .hero-art{display:grid;place-items:center}
+    .hero-art .icon-wrap{
+      width: 208px; height: 208px; border-radius: 26%;
+      display:grid; place-items:center;
+      background: conic-gradient(from 140deg, rgba(245,195,0,.12), transparent 30% 70%, rgba(255,225,90,.10));
+      box-shadow: var(--shadow-hero);
+    }
+    .hero-art img{width: 164px; height: 164px; border-radius: 24%}
+
+    /* Kicker */
+    .kicker{
+      font-size:.8rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px;
+      color: rgb(var(--ink));
+    }
+    .kicker::after{
+      content:""; display:inline-block; width:30px; height:6px; margin-left:8px; vertical-align:middle;
+      background: rgba(var(--y),1); border-radius:999px; opacity:.9;
     }
 
-    .feature {
-      padding: 18px;
-      border-radius: 16px;
-      border: 1px solid var(--card-border);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(17, 18, 24, 0.9));
-      box-shadow: var(--glow);
-      position: relative;
-      overflow: hidden;
-      transform: translateY(8px);
-      opacity: 0;
-      animation: rise 900ms ease forwards;
+    /* Cards */
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:14px 0 2px}
+    @media (max-width:900px){ .grid{grid-template-columns:1fr 1fr} }
+    @media (max-width:620px){ .grid{grid-template-columns:1fr} }
+
+    .card{
+      background: rgb(var(--card));
+      border-radius: var(--radius);
+      padding: 16px;
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: var(--shadow-card);
     }
+    .row{display:flex;gap:10px;align-items:flex-start}
+    .icon{width:20px;height:20px;flex:0 0 20px}
 
-    .feature:nth-child(1) { animation-delay: 120ms; }
-    .feature:nth-child(2) { animation-delay: 240ms; }
-    .feature:nth-child(3) { animation-delay: 360ms; }
-    .feature:nth-child(4) { animation-delay: 480ms; }
-    .feature:nth-child(5) { animation-delay: 600ms; }
-    .feature:nth-child(6) { animation-delay: 720ms; }
+    .card h3{font-size: var(--fs-h3); margin: 0 0 6px}
+    .card p{margin:0;color:rgb(var(--muted))}
 
-    @keyframes rise {
-      to { opacity: 1; transform: translateY(0); }
+    /* Privacy facts (aligned, same size) */
+    .facts{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+    .fact{display:flex;gap:8px;align-items:flex-start;font-size:var(--fs-body)}
+    .fact .label{
+      font-weight:800; font-size:1em; line-height:1.5; flex:0 0 auto;
+      padding:.15rem .5rem; border-radius:999px; background:rgba(var(--y),.18); color:#3d3200;
     }
+    .fact .body{flex:1; margin:0; font-size:1em; line-height:1.5; color:rgb(var(--muted))}
 
-    .feature h3 { margin-top: 0; color: var(--bee-gold); }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
+    /* Slim support banner */
+    .cta-banner{
+      margin-top:14px;
+      background:linear-gradient(135deg, rgba(var(--y),.10), rgba(var(--y2),.16));
+      border:1px solid rgba(0,0,0,.06);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      box-shadow: 0 6px 16px rgba(245,195,0,.12);
     }
+    .cta-banner .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .cta-banner h3{margin:0;font-size:1rem;line-height:1.3;letter-spacing:.1px}
+    .cta-banner p{margin:0;color:rgb(var(--muted));font-size:var(--fs-small)}
+    .cta-banner .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+    .cta-banner .btn{padding:8px 12px;border-radius:10px;box-shadow:0 6px 16px rgba(245,195,0,.18);font-weight:700}
+    .cta-banner .btn.secondary{background:rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.08)}
 
-    .step {
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(8px);
-    }
+    /* Footer */
+    footer{padding: var(--py) 0; border-top:1px solid rgba(0,0,0,.06)}
+    .footer{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+    .links{display:flex;gap:14px;flex-wrap:wrap}
+    .links a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(0,0,0,.22);font-size:.95rem}
 
-    .step-number {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 12px;
-      background: linear-gradient(140deg, var(--bee-gold), var(--bee-orange));
-      color: var(--jet-black);
-      font-weight: 800;
-      box-shadow: var(--glow);
-      margin-bottom: 12px;
-    }
+    /* Focus visibility */
+    :focus-visible{outline: 2px solid rgba(var(--y) / 1); outline-offset: 2px; border-radius: 8px}
 
-    .detail-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 14px;
-    }
-
-    .detail-card {
-      padding: 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .badge-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
-    .badge {
-      background: rgba(255, 204, 0, 0.12);
-      border: 1px solid rgba(255, 204, 0, 0.28);
-      color: #f7f8fb;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-weight: 600;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 36px;
-      color: #d5d9e5;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      background: rgba(12, 12, 12, 0.8);
-      margin-top: 40px;
-    }
-
-    .floating-bee {
-      position: fixed;
-      width: 56px;
-      height: 56px;
-      display: grid;
-      place-items: center;
-      right: 22px;
-      bottom: 22px;
-      background: linear-gradient(135deg, var(--bee-orange), var(--bee-gold));
-      color: var(--jet-black);
-      border-radius: 18px;
-      box-shadow: 0 12px 30px rgba(255, 159, 28, 0.35);
-      animation: hover 3.6s ease-in-out infinite;
-      cursor: pointer;
-      border: 1px solid rgba(255, 204, 0, 0.35);
-    }
-
-    @keyframes hover {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    @media (max-width: 640px) {
-      main { padding: 36px 18px 72px; }
-      nav { padding: 12px 18px; }
-    }
+    /* Soft entrance (tiny, professional) */
+    [data-animate]{opacity:0;transform:translateY(6px);animation:fadeUp .45s .06s forwards}
+    .d1{animation-delay:.12s}.d2{animation-delay:.18s}.d3{animation-delay:.24s}
+    @keyframes fadeUp{to{opacity:1;transform:none}}
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <div class="brand">
-        <div class="mark">🐝</div>
+  <!-- Header -->
+  <header class="container" aria-label="Top">
+    <div class="top">
+      <a class="brand" href="./" aria-label="Buzzkill home">
+        <img src="./buzzkill-icon.png" alt="">
         <span>Buzzkill</span>
-      </div>
-      <a class="cta" href="#get-started">Stay focused</a>
-    </nav>
+      </a>
+    </div>
   </header>
 
-  <main>
+  <main class="container">
+    <!-- HERO -->
     <section class="hero">
       <div>
-        <p class="pill">New · Smart screen-time coach</p>
-        <h1>Buzzkill keeps your apps in check so you can stay in flow.</h1>
-        <p class="tagline">Pick the apps to tame, set the tone, and let localized nudges keep you mindful while your goals stay on track.</p>
-        <div class="badge-row">
-          <span class="badge">Localized nudges</span>
-          <span class="badge">Smart cadence</span>
-          <span class="badge">Goal-aware</span>
-          <span class="badge">Delightful delivery</span>
+        <h1 data-animate>Gentle nudges for mindful app time</h1>
+        <p class="lead d1" data-animate>
+          Buzzkill helps you spend less time in selected apps using Apple Screen Time APIs.
+          Choose the apps, set an interval, and get on-device reminders while you use them.
+          You also get a nudge when the daily goal is reached. Private by design. No tracking.
+        </p>
+
+        <div class="cta d2" data-animate>
+          <!-- Keep as placeholder until App Store is live -->
+          <a class="btn" href="#" aria-disabled="true" title="App Store link coming soon">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            App Store (soon)
+          </a>
         </div>
+
+        <p class="lead" style="font-size:.95rem;margin-top:10px;color:rgb(var(--muted))">
+          Questions? <a href="mailto:somersjens@gmail.com">somersjens@gmail.com</a>
+        </p>
       </div>
-      <div class="glass hero-card">
-        <h3 style="margin-top:0">Live usage radar</h3>
-        <p>Buzzkill watches your selected apps, synchronizes settings, and fires the right nudge at the right moment.</p>
-        <div class="metric-grid">
-          <div class="metric">
-            <strong>Smart thresholds</strong><br/>
-            Per-app cadence down to every minute with overlap deduplication.
-          </div>
-          <div class="metric">
-            <strong>Personal tone</strong><br/>
-            Friendly names, tone, and language synced across devices.
-          </div>
-          <div class="metric">
-            <strong>Goal focus</strong><br/>
-            Pre-goal warnings and "goal reached" reminders with quiet buffers.
-          </div>
+
+      <div class="hero-art d3" data-animate aria-hidden="true">
+        <div class="icon-wrap">
+          <img src="./buzzkill-icon.png" alt="">
         </div>
       </div>
     </section>
 
-    <section>
-      <h2>Everything you need to stay in control</h2>
-      <p>Buzzkill’s nudge engine combines tight Device Activity thresholds, localized messaging, and thoughtful timing so motivation feels human—never spammy.</p>
-      <div class="features">
-        <div class="feature">
-          <h3>Pick the apps to keep in check</h3>
-          <p>Select exact apps or categories, layer per-minute schedules, and let Buzzkill deduplicate overlaps.</p>
-        </div>
-        <div class="feature">
-          <h3>Set the tone & language</h3>
-          <p>Choose tone, language, personal goals, and per-app nudge frequency—all synced via shared settings.</p>
-        </div>
-        <div class="feature">
-          <h3>Smart nudges</h3>
-          <p>As soon as usage crosses the configured cadence, Buzzkill evaluates global and per-app time to keep prompts relevant.</p>
-        </div>
-        <div class="feature">
-          <h3>Goal reminders</h3>
-          <p>Early warnings and goal-reached notices respect quiet buffers and rotate messages to avoid repetition.</p>
-        </div>
-        <div class="feature">
-          <h3>Human, localized messaging</h3>
-          <p>Rich templates with placeholders for minutes, app names, and total time are loaded from language-specific files.</p>
-        </div>
-        <div class="feature">
-          <h3>Delightful delivery</h3>
-          <p>Each prompt uses custom titles, subtitles, body, and sound to arrive crisply with zero network dependency.</p>
-        </div>
+    <!-- FEATURES -->
+    <section aria-labelledby="features">
+      <div class="kicker" id="features">Features</div>
+      <div class="grid">
+        <article class="card" data-animate>
+          <div class="row">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <div>
+              <h3>Select and focus</h3>
+              <p>Pick apps with the Screen Time picker (<strong>FamilyControls</strong>). Buzzkill monitors only those choices on device using <strong>DeviceActivity</strong>.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card d1" data-animate>
+          <div class="row">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" fill="none"/>
+            </svg>
+            <div>
+              <h3>Timed nudges</h3>
+              <p>Set an interval per app: 5, 10, 15, 20, 25, or 30 minutes. Reminders appear while the app is in use and when the daily goal is reached.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card d2" data-animate>
+          <div class="row">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 12a8 8 0 1 0 8-8" stroke="currentColor" stroke-width="1.6" fill="none"/>
+              <path d="M8 12a4 4 0 1 0 4-4" stroke="currentColor" stroke-width="1.6" fill="none"/>
+            </svg>
+            <div>
+              <h3>Dynamic messages</h3>
+              <p>Notifications rotate through short prompts and show your total time for that app today. You can pick a tone and a language.</p>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section id="get-started">
-      <h2>How it works</h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-number">1</div>
-          <h3>Pick apps & cadence</h3>
-          <p>Choose the apps you want to curb and schedule thresholds down to every minute, with hybrid options for busy days.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <h3>Set tone & limits</h3>
-          <p>Store your preferred nudge tone, language, daily buzz-free allowance, and early warning window in one synced place.</p>
-        </div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <h3>Feel the right nudge</h3>
-          <p>When usage crosses your cadence, Buzzkill chooses the best localized message and delivers it with a custom sound.</p>
-        </div>
+    <!-- PRIVACY -->
+    <section aria-labelledby="privacy">
+      <div class="kicker" id="privacy">Privacy at the core</div>
+      <div class="card" data-animate>
+        <ul class="facts">
+          <li class="fact">
+            <span class="label">On-device only</span>
+            <p class="body">All processing stays on the device. Permissions live in iOS Settings.</p>
+          </li>
+          <li class="fact">
+            <span class="label">No blocking</span>
+            <p class="body">Buzzkill does not block apps. Start or stop reminders with one control.</p>
+          </li>
+          <li class="fact">
+            <span class="label">No tracking</span>
+            <p class="body">No screenshots, no server logs, no analytics SDKs.</p>
+          </li>
+        </ul>
+        <p style="margin:8px 0 0;color:rgb(var(--muted))">Read the full <a href="./privacy.html">Privacy Policy</a>.</p>
       </div>
-    </section>
 
-    <section>
-      <h2>Built for motivation</h2>
-      <div class="detail-grid">
-        <div class="detail-card">
-          <strong>Personal goal reminders</strong>
-          <p>Stay ahead with pre-goal alerts and celebratory notices when you reach your daily target.</p>
-        </div>
-        <div class="detail-card">
-          <strong>Localized from day one</strong>
-          <p>Title and body templates are organized by tone, urgency, and time of day to feel native in every language.</p>
-        </div>
-        <div class="detail-card">
-          <strong>Mindful timing</strong>
-          <p>Quiet buffers prevent spammy nudges while rotation keeps every reminder feeling fresh.</p>
-        </div>
-        <div class="detail-card">
-          <strong>Instant delivery</strong>
-          <p>Notifications are built locally with custom sound so they hit immediately, even offline.</p>
+      <!-- Slim support row -->
+      <div class="cta-banner" data-animate>
+        <div class="wrap">
+          <div>
+            <h3>Questions or feedback?</h3>
+            <p>Say hello, report an issue, or suggest a feature.</p>
+          </div>
+          <div class="actions">
+            <a class="btn" href="mailto:somersjens@gmail.com">Email support</a>
+            <a class="btn secondary" href="./privacy.html">Privacy policy</a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <div class="floating-bee" title="Back to top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">⬆️</div>
-
-  <footer class="footer">
-    <strong>Buzzkill</strong> · Smart screen-time nudges that keep you focused.
+  <!-- FOOTER -->
+  <footer class="container">
+    <div class="footer" aria-label="Footer">
+      <div>© <span id="y"></span> Buzzkill</div>
+      <nav class="links" aria-label="Footer links">
+        <a href="./privacy.html">Privacy</a>
+        <a href="mailto:somersjens@gmail.com">Contact</a>
+      </nav>
+    </div>
   </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
