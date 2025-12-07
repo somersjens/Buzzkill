@@ -22,6 +22,7 @@
       --muted: 112 112 112;
       --card: 255 255 255;
       --bg: 252 252 252;
+      --border-strong: 2px solid rgba(var(--y), 1);
 
       --container: 920px;  /* same as index */
       --px: 16px;          /* side padding */
@@ -48,8 +49,8 @@
       line-height:1.55;
       color: rgb(var(--ink));
       background:
-        radial-gradient(780px 420px at 82% -8%, rgba(var(--y2)/.45), transparent 60%),
-        linear-gradient(180deg, rgba(var(--y)/.10), rgba(255 255 255 / 0)),
+        linear-gradient(180deg, rgba(var(--y2)/.16), rgba(var(--y)/.10) 34%, transparent),
+        radial-gradient(620px 420px at 78% -12%, rgba(var(--y2)/.24), transparent 60%),
         rgb(var(--bg));
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
@@ -62,11 +63,12 @@
     .top{display:flex;justify-content:space-between;align-items:center}
 
     /* Brand (same as index) */
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-    .brand img{width:32px;height:32px;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,.15)}
-    .brand span{font-weight:800;letter-spacing:.15px;font-size:15px}
+    .brand{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:9px 14px;border-radius:999px;border:var(--border-strong);background:rgba(var(--y2),.18);box-shadow:0 10px 22px rgba(245,195,0,.16)}
+    .brand span{font-weight:800;letter-spacing:.2px;font-size:15px;text-transform:uppercase}
 
     main{padding:var(--py) 0}
+
+    .policy-shell{border:var(--border-strong);border-radius:calc(var(--radius) + 4px);padding:var(--py);background:rgba(var(--card),.95);box-shadow:0 18px 40px rgba(0,0,0,.08);display:grid;gap:14px}
 
     /* Title/kicker */
     .kicker{
@@ -100,7 +102,7 @@
       background:rgb(var(--card));
       border-radius:var(--radius);
       padding:16px;
-      border:1px solid rgba(0,0,0,.06);
+      border:var(--border-strong);
       box-shadow:var(--shadow-card);
     }
 
@@ -116,8 +118,8 @@
 
     /* Footer */
     .foot{
-      margin-top:14px; padding-top:12px;
-      border-top:1px solid rgba(0,0,0,.06);
+      margin-top:4px; padding-top:12px;
+      border-top:var(--border-strong);
       display:flex; justify-content:space-between; align-items:center; gap:12px;
       color:rgb(var(--muted));
     }
@@ -135,13 +137,12 @@
   <!-- Header -->
   <header class="container top" aria-label="Top">
     <a class="brand" href="./" aria-label="Back to site">
-      <img src="./buzzkill-icon.png" alt="">
       <span>Buzzkill</span>
     </a>
   </header>
 
   <main class="container">
-    <div>
+    <div class="policy-shell">
       <div class="kicker">Privacy</div>
       <h1>Privacy Policy</h1>
       <p><span class="badge">Last updated: October 22, 2025</span></p>

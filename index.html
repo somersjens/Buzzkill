@@ -24,6 +24,7 @@
       --muted: 112 112 112;
       --card: 255 255 255;
       --bg: 252 252 252;
+      --border-strong: 2px solid rgba(var(--y), 1);
 
       /* Layout */
       --container: 920px;   /* tighter for a pro look */
@@ -56,8 +57,8 @@
       line-height: 1.55;
       color: rgb(var(--ink));
       background:
-        radial-gradient(920px 520px at 20% -20%, rgba(var(--y)/.18), transparent 60%),
-        radial-gradient(820px 620px at 88% 0%, rgba(var(--y2)/.35), transparent 55%),
+        linear-gradient(180deg, rgba(var(--y2)/.16), rgba(var(--y)/.10) 32%, transparent),
+        radial-gradient(620px 420px at 78% -12%, rgba(var(--y2)/.24), transparent 60%),
         rgb(var(--bg));
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -70,15 +71,17 @@
     .top{display:flex;justify-content:space-between;align-items:center}
 
     /* Brand */
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.04)}
-    .brand img{width:32px;height:32px;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,.16)}
-    .brand span{font-weight:800;letter-spacing:.15px;font-size:15px}
+    .brand{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:9px 14px;border-radius:999px;border:var(--border-strong);background:rgba(var(--y2),.18);box-shadow:0 10px 22px rgba(245,195,0,.16)}
+    .brand span{font-weight:800;letter-spacing:.2px;font-size:15px;text-transform:uppercase}
 
     /* Sections */
     section{padding: var(--py) 0}
 
+    .panel{border:var(--border-strong);border-radius:calc(var(--radius) + 2px);background:rgba(var(--card),.95);box-shadow:0 16px 36px rgba(0,0,0,.06);padding:calc(var(--py) - 6px);}
+    .panel + .panel{margin-top:var(--py)}
+
     /* Hero */
-    .hero{display:grid;grid-template-columns: 1.05fr .95fr;gap: 24px;align-items: center;}
+    .hero{display:grid;grid-template-columns: 1.05fr .95fr;gap: 24px;align-items: center;padding:calc(var(--py) + 4px);border:var(--border-strong);border-radius:calc(var(--radius) + 4px);background:rgba(var(--card),.92);box-shadow:0 22px 52px rgba(0,0,0,.08);}
     @media (max-width:860px){ .hero{grid-template-columns:1fr} }
 
     h1{font-size: var(--fs-hero); line-height: 1.08; margin: 6px 0 8px; letter-spacing: -.3px;}
@@ -153,7 +156,7 @@
     .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:14px 0 2px}
     @media (max-width:720px){ .grid{grid-template-columns:1fr} }
 
-    .card{background: rgb(var(--card));border-radius: var(--radius);padding: 16px;border: 1px solid rgba(0,0,0,.05);box-shadow: var(--shadow-card);}
+    .card{background: rgb(var(--card));border-radius: var(--radius);padding: 16px;border: var(--border-strong);box-shadow: var(--shadow-card);}
     .row{display:flex;gap:10px;align-items:flex-start}
     .icon{width:20px;height:20px;flex:0 0 20px}
 
@@ -167,7 +170,7 @@
     .fact .body{flex:1; margin:0; font-size:1em; line-height:1.5; color:rgb(var(--muted))}
 
     /* Slim support banner */
-    .cta-banner{margin-top:14px;background:linear-gradient(135deg, rgba(var(--y),.10), rgba(var(--y2),.16));border:1px solid rgba(0,0,0,.06);border-radius: var(--radius);padding: 12px 14px;box-shadow: 0 6px 16px rgba(245,195,0,.12);}
+    .cta-banner{margin-top:14px;background:rgb(var(--card));border:var(--border-strong);border-radius: var(--radius);padding: 12px 14px;box-shadow: 0 16px 32px rgba(245,195,0,.16);}
     .cta-banner .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
     .cta-banner h3{margin:0;font-size:1rem;line-height:1.3;letter-spacing:.1px}
     .cta-banner p{margin:0;color:rgb(var(--muted));font-size:var(--fs-small)}
@@ -183,7 +186,7 @@
     .support .paypal{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 
     /* Footer */
-    footer{padding: var(--py) 0; border-top:1px solid rgba(0,0,0,.06)}
+    footer{padding: var(--py) 0; border-top:var(--border-strong)}
     .footer{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
     .links{display:flex;gap:14px;flex-wrap:wrap}
     .links a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(0,0,0,.22);font-size:.95rem}
@@ -204,7 +207,6 @@
   <header class="container" aria-label="Top">
     <div class="top">
       <a class="brand" href="./" aria-label="Buzzkill home">
-        <img src="./buzzkill-icon.png" alt="">
         <span>Buzzkill</span>
       </a>
     </div>
@@ -214,9 +216,9 @@
     <!-- HERO -->
     <section class="hero">
       <div>
-        <h1 data-animate>Gentle nudges for mindful app time</h1>
+        <h1 data-animate>Stop wasting time, starting buzzing!</h1>
         <p class="lead d1" data-animate>
-          Pick the apps you want to tame, choose how often you want a reminder, and let Buzzkill nudge you back to what matters. No tracking, no accounts—just quiet, on-device cues.
+          Buzzkill is an upbeat, on-device coach that nudges you out of doomscrolling and back into the stuff you actually care about—no accounts, no tracking, just friendly reminders on your own phone.
         </p>
 
         <div class="cta d2" data-animate>
@@ -239,7 +241,7 @@
     </section>
 
     <!-- FEATURES -->
-    <section aria-labelledby="features">
+    <section class="panel" aria-labelledby="features">
       <div class="kicker" id="features">Features</div>
       <div class="grid">
         <article class="card" data-animate>
@@ -283,7 +285,7 @@
     </section>
 
     <!-- PRIVACY -->
-    <section aria-labelledby="privacy">
+    <section class="panel" aria-labelledby="privacy">
       <div class="kicker" id="privacy">Privacy at the core</div>
       <div class="card" data-animate>
         <ul class="facts">
