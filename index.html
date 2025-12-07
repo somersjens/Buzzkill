@@ -81,6 +81,8 @@
     .hero{display:grid;grid-template-columns: 1.05fr .95fr;gap: 24px;align-items: center;padding:calc(var(--py) + 4px);border:var(--border-strong);border-radius:calc(var(--radius) + 4px);background:rgba(var(--card),.92);box-shadow:none;}
     @media (max-width:860px){ .hero{grid-template-columns:1fr} }
 
+    .hero-copy{background:rgba(var(--card),.98);border:var(--border-strong);border-radius:calc(var(--radius) + 2px);padding:18px;box-shadow:none;display:flex;flex-direction:column;gap:10px}
+
     h1{font-size: var(--fs-hero); line-height: 1.08; margin: 6px 0 8px; letter-spacing: -.3px;}
     .lead{font-size: var(--fs-body); color: rgb(var(--muted)); max-width: 52ch; margin: 0}
 
@@ -197,6 +199,8 @@
     @keyframes pulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.35;transform:scale(1.04)}}
 
     @media (max-width: 720px){
+      .hero-copy{order:2}
+      .hero-art{order:1}
       .cta{flex-direction:column;align-items:stretch}
       .cta .btn{justify-content:center;width:100%}
     }
@@ -215,7 +219,7 @@
   <main class="container">
     <!-- HERO -->
     <section class="hero">
-      <div>
+      <div class="hero-copy">
         <h1 data-animate>Stop wasting time, start buzzing</h1>
         <p class="lead d1" data-animate>
           How often do you open an app “for a minute” and suddenly notice that hours have passed and you feel exhausted? With Buzzkill you stay aware while you scroll, so doomscrolling becomes a thing of the past.
