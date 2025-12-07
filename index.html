@@ -74,14 +74,36 @@
     /* Sections */
     section{padding: var(--py) 0}
 
-    .panel{border:var(--border-strong);border-radius:calc(var(--radius) + 2px);background:rgba(var(--card),.95);box-shadow:none;padding:calc(var(--py) - 6px);}
+    .panel{
+      border:var(--border-strong);
+      border-radius:calc(var(--radius) + 2px);
+      background:rgba(var(--card),.95);
+      box-shadow:none;
+      padding:calc(var(--py) - 6px);
+    }
     .panel + .panel{margin-top:var(--py)}
 
     /* Hero */
-    .hero{display:grid;grid-template-columns: 1.05fr .95fr;gap: 24px;align-items: center;padding:calc(var(--py) + 4px);border:var(--border-strong);border-radius:calc(var(--radius) + 4px);background:rgba(var(--card),.92);box-shadow:none;}
-    @media (max-width:860px){ .hero{grid-template-columns:1fr} }
+    .hero{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 24px;
+      align-items: center;
+    }
+    @media (max-width:860px){
+      .hero{grid-template-columns:1fr}
+    }
 
-    .hero-copy{background:rgba(var(--card),.98);border:var(--border-strong);border-radius:calc(var(--radius) + 2px);padding:18px;box-shadow:none;display:flex;flex-direction:column;gap:10px}
+    .hero-copy{
+      background:rgba(var(--card),.98);
+      border:var(--border-strong);
+      border-radius:calc(var(--radius) + 2px);
+      padding:18px;
+      box-shadow:none;
+      display:flex;
+      flex-direction:column;
+      gap:10px
+    }
 
     h1{font-size: var(--fs-hero); line-height: 1.08; margin: 6px 0 8px; letter-spacing: -.3px;}
     .lead{font-size: var(--fs-body); color: rgb(var(--muted)); max-width: 52ch; margin: 0}
@@ -98,16 +120,24 @@
     .btn:hover{transform:translateY(-1px); box-shadow:none}
     .btn[aria-disabled="true"]{opacity:.78;cursor:not-allowed}
 
-    /* Hero art (no white frame, subtle ring) */
-    .hero-art{display:grid;place-items:center;position:relative}
+    /* Hero art with animated vibrating lines */
+    .hero-art{
+      display:grid;
+      place-items:center;
+      position:relative;
+    }
     .hero-art .icon-wrap{
-      width: 216px; height: 216px; border-radius: 28%;
-      display:grid; place-items:center;
+      width: 216px;
+      height: 216px;
+      border-radius: 28%;
+      display:grid;
+      place-items:center;
       background: rgb(var(--bg));
       box-shadow: var(--shadow-hero);
       position:relative;
       isolation:isolate;
       overflow:hidden;
+      animation: buzzIcon 1.6s ease-in-out infinite;
     }
     .hero-art .icon-wrap::before{
       content:"";
@@ -127,7 +157,33 @@
       opacity:.8;
       animation: loopOrbit 5s ease-in-out infinite;
     }
-    .hero-art img{width: 168px; height: 168px; border-radius: 26%; position:relative; z-index:1; box-shadow:none}
+    /* Black "vibration" lines around the icon */
+    .hero-art .icon-wrap::after{
+      content:"";
+      position:absolute;
+      width:38px;
+      height:3px;
+      background:rgba(0,0,0,.35);
+      border-radius:999px;
+      top:18px;
+      right:-6px;
+      box-shadow:
+        -10px 10px 0 rgba(0,0,0,.25),
+        -20px 20px 0 rgba(0,0,0,.18);
+      transform-origin:left center;
+      animation: buzzLines 1.4s ease-in-out infinite;
+      pointer-events:none;
+    }
+
+    .hero-art img{
+      width: 168px;
+      height: 168px;
+      border-radius: 26%;
+      position:relative;
+      z-index:1;
+      box-shadow:none;
+    }
+
     .btn.paypal{
       background:linear-gradient(135deg,#ffc439,#f5b800);
       color:#1a1a1a;
@@ -138,12 +194,23 @@
 
     /* Kicker */
     .kicker{
-      font-size:.8rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px;
+      font-size:.95rem;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      margin-bottom:14px;
+      font-weight:700;
       color: rgb(var(--ink));
     }
     .kicker::after{
-      content:""; display:inline-block; width:30px; height:6px; margin-left:8px; vertical-align:middle;
-      background: rgba(var(--y),1); border-radius:999px; opacity:.9;
+      content:"";
+      display:inline-block;
+      width:40px;
+      height:6px;
+      margin-left:8px;
+      vertical-align:middle;
+      background: rgba(var(--y),1);
+      border-radius:999px;
+      opacity:.9;
     }
 
     /* Cards */
@@ -191,12 +258,31 @@
     [data-animate]{opacity:0;transform:translateY(6px);animation:fadeUp .45s .06s forwards}
     .d1{animation-delay:.12s}.d2{animation-delay:.18s}.d3{animation-delay:.24s}
     @keyframes fadeUp{to{opacity:1;transform:none}}
+
     @keyframes loopOrbit{
       0%{transform:rotate(0deg) translate3d(-6px,-4px,0) scale(.98)}
       50%{transform:rotate(180deg) translate3d(7px,5px,0) scale(1.04)}
       100%{transform:rotate(360deg) translate3d(-6px,-4px,0) scale(.98)}
     }
-    @keyframes pulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.35;transform:scale(1.04)}}
+
+    @keyframes pulse{
+      0%,100%{opacity:.55;transform:scale(1)}
+      50%{opacity:.35;transform:scale(1.04)}
+    }
+
+    /* New keyframes for vibrating icon & lines */
+    @keyframes buzzIcon{
+      0%,100%{transform:translate3d(0,0,0) scale(1)}
+      20%{transform:translate3d(-1px,1px,0) scale(1.01)}
+      40%{transform:translate3d(1px,-1px,0) scale(1.02)}
+      60%{transform:translate3d(-0.5px,0.5px,0) scale(1.01)}
+      80%{transform:translate3d(0.5px,-0.5px,0) scale(1.01)}
+    }
+
+    @keyframes buzzLines{
+      0%,100%{transform:translate3d(0,0,0) rotate(18deg);opacity:.8}
+      50%{transform:translate3d(1px,-1px,0) rotate(22deg);opacity:1}
+    }
 
     @media (max-width: 720px){
       .hero-copy{order:2}
@@ -218,7 +304,7 @@
 
   <main class="container">
     <!-- HERO -->
-    <section class="hero">
+    <section class="panel hero">
       <div class="hero-copy">
         <h1 data-animate>Stop wasting time, start buzzing</h1>
         <p class="lead d1" data-animate>
@@ -298,7 +384,7 @@
             </svg>
             <div>
               <h3>Get notified (a lot)</h3>
-              <p>You will receive frequent notifications for each selected app, and you can pause everything with one tap.</p>
+              <p>Receive frequent notifications for each selected app, and you can pause everything with one tap.</p>
             </div>
           </div>
         </article>
@@ -311,7 +397,7 @@
       <div class="card" data-animate>
         <ul class="facts">
           <li class="fact">
-            <p class="body">Apps are never blocked at the wrong moment; only sends notifications.</p>
+            <p class="body">Apps are never blocked at the wrong moment; only notifications.</p>
           </li>
           <li class="fact">
             <p class="body">No gimmicks or gamification, just a fast and simple app.</p>
@@ -330,7 +416,7 @@
       <div>© <span id="y"></span> Buzzkill</div>
       <nav class="links" aria-label="Footer links">
         <a href="./privacy.html">Privacy</a>
-        <a href="mailto:jens@hakketjak.nl">Contact</a>
+        <a href="mailto:hak@hakketjak.nl">Contact</a>
       </nav>
     </div>
   </footer>
