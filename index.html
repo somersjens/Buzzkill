@@ -175,9 +175,9 @@
 
     /* Privacy facts (aligned, same size) */
     .facts{display:grid;gap:8px;margin:0;padding:0;list-style:none}
-    .fact{display:flex;gap:8px;align-items:flex-start;font-size:var(--fs-body)}
-    .fact .label{font-weight:800; font-size:1em; line-height:1.5; flex:0 0 auto; padding:.15rem .5rem; border-radius:999px; background:rgba(var(--y),.18); color:#3d3200;}
-    .fact .body{flex:1; margin:0; font-size:1em; line-height:1.5; color:rgb(var(--muted))}
+    .fact{display:grid;grid-template-columns:144px 1fr;gap:10px;align-items:flex-start;font-size:var(--fs-body)}
+    .fact .label{font-weight:800; font-size:1em; line-height:1.5; justify-self:end; text-align:right; padding:.15rem .5rem; border-radius:999px; background:rgba(var(--y),.18); color:#3d3200;}
+    .fact .body{margin:0; font-size:1em; line-height:1.5; color:rgb(var(--muted))}
 
     /* Slim support banner */
     .cta-banner{margin-top:14px;background:rgb(var(--card));border:var(--border-strong);border-radius: var(--radius);padding: 12px 14px;box-shadow: 0 16px 32px rgba(245,195,0,.16);}
@@ -339,7 +339,6 @@
             <p class="body">Privacy first: all data stays safely on your phone.</p>
           </li>
         </ul>
-        <p style="margin:8px 0 0;color:rgb(var(--muted))">Read the full <a href="./privacy.html">Privacy Policy</a>.</p>
       </div>
     </section>
   </main>
