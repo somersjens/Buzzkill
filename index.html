@@ -74,7 +74,7 @@
       padding:9px 14px;
       border-radius:999px;
       border:var(--border-strong);
-      background:rgb(var(--card)); /* grey chip now */
+      background:rgb(var(--card)); /* grey chip */
       box-shadow:none;
     }
     .brand span{
@@ -85,7 +85,7 @@
     }
 
     /* Sections */
-    section{padding:10px 0} /* a bit tighter between sections */
+    section{padding:10px 0}
 
     .panel{
       border:var(--border-strong);
@@ -94,7 +94,7 @@
       box-shadow:none;
       padding:16px;
     }
-    .panel + .panel{margin-top:14px} /* smaller vertical gap between blocks */
+    .panel + .panel{margin-top:14px}
 
     /* Hero block */
     .hero-block-header{
@@ -212,7 +212,7 @@
     }
     .btn.paypal svg{width:18px;height:18px}
 
-    /* Kicker – larger to align visually more with hero */
+    /* Kicker – a bit larger */
     .kicker{
       font-size:.95rem;
       text-transform:uppercase;
@@ -248,22 +248,6 @@
     .facts{display:grid;gap:8px;margin:0;padding-left:18px;list-style:disc}
     .fact{font-size:var(--fs-body); color:rgb(var(--muted))}
     .fact .body{margin:0; font-size:1em; line-height:1.5;}
-
-    /* Slim support banner */
-    .cta-banner{margin-top:14px;background:rgb(var(--card));border:var(--border-strong);border-radius: var(--radius);padding: 12px 14px;box-shadow: none;}
-    .cta-banner .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-    .cta-banner h3{margin:0;font-size:1rem;line-height:1.3;letter-spacing:.1px}
-    .cta-banner p{margin:0;color:rgb(var(--muted));font-size:var(--fs-small)}
-    .cta-banner .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-    .cta-banner .btn{padding:8px 12px;border-radius:10px;box-shadow:none;font-weight:700}
-    .cta-banner .btn.secondary{background:rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.08)}
-
-    /* Donation callout */
-    .support{margin-top:16px}
-    .support .card{display:grid;gap:10px;align-items:center}
-    .support h3{margin:0;font-size:1rem;line-height:1.3}
-    .support p{margin:0;color:rgb(var(--muted));font-size:var(--fs-small)}
-    .support .paypal{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 
     /* Footer */
     footer{padding: var(--py) 0; border-top:var(--border-strong)}
@@ -337,9 +321,9 @@
               </svg>
               Download
             </a>
-            <a class="btn secondary" href="https://apps.apple.com/app/id6754295660">Share</a>
-            <a class="btn secondary" href="https://apps.apple.com/app/id6754295660?action=write-review">Review</a>
-            <a class="btn secondary paypal" href="https://www.paypal.com/donate/?hosted_button_id=FNB87BRQJYB7G" target="_blank" rel="noreferrer noopener">Support</a>
+            <a class="btn secondary paypal" href="https://www.paypal.com/donate/?hosted_button_id=FNB87BRQJYB7G" target="_blank" rel="noreferrer noopener">
+              Support via PayPal
+            </a>
           </div>
         </div>
 
@@ -404,7 +388,7 @@
             </svg>
             <div>
               <h3>Get notified (a lot)</h3>
-              <p>You will receive frequent notifications for each selected app, and you can pause everything with one tap.</p>
+              <p>Receive frequent notifications for each selected app, and you can pause everything with one tap.</p>
             </div>
           </div>
         </article>
@@ -417,7 +401,7 @@
       <div class="card" data-animate>
         <ul class="facts">
           <li class="fact">
-            <p class="body">Apps are never blocked at the wrong moment; only sends notifications.</p>
+            <p class="body">Apps are never blocked at the wrong moment; only notifications.</p>
           </li>
           <li class="fact">
             <p class="body">No gimmicks or gamification, just a fast and simple app.</p>
