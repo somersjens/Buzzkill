@@ -5,7 +5,7 @@
   <title>Buzzkill – Privacy Policy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Buzzkill Privacy Policy">
-  <meta name="theme-color" content="#F5C300">
+  <meta name="theme-color" content="#FECB1F">
 
   <!-- Icons -->
   <link rel="icon" type="image/png" href="./buzzkill-icon.png">
@@ -14,190 +14,187 @@
   <meta property="og:image" content="./buzzkill-icon.png">
 
   <style>
-    /* === Design tokens (match main page; compact, professional) === */
-    :root{
-      --y: 245 195 0;      /* primary yellow */
-      --y2: 255 225 90;    /* soft yellow */
-      --ink: 22 22 22;     /* body text */
-      --muted: 112 112 112;
-      --card: 255 255 255;
-      --bg: 252 252 252;
-      --border-strong: 2px solid rgba(var(--y), 1);
-
-      --container: 920px;  /* same as index */
-      --px: 16px;          /* side padding */
-      --py: 28px;          /* vertical rhythm */
-      --radius: 14px;
-
-      --fs-h1: clamp(1.9rem, 1.2rem + 2.2vw, 2.35rem);
-      --fs-h2: 1.08rem;
-      --fs-body: 1rem;
-      --fs-small: .94rem;
-
-      --shadow-card: 0 1px 0 rgba(255,255,255,.55) inset, 0 8px 18px rgba(245,195,0,.10);
-    }
-    @media (prefers-color-scheme: dark){
-      :root{ --ink: 235 235 235; --muted: 170 170 170; --card: 26 26 26; --bg: 10 10 10 }
+    :root {
+      --y: 254 203 31;
+      --ink: 22 22 22;
+      --muted: 104 104 104;
+      --bg: #f2f2f7;
+      --card: #ffffff;
+      --tile-radius: 22%;
+      --shadow: 0 18px 36px rgba(0,0,0,.08);
+      --blue: rgb(0,122,255);
+      --gray5: #e5e5ea;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      font-size:16px;
-      line-height:1.55;
+    @media (prefers-color-scheme: dark) {
+      :root { --ink: 235 235 235; --muted: 170 170 170; --card: #1c1c1e; --bg: #111116; --gray5: #2c2c2e; }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: -apple-system, system-ui, "SF Pro Display", "Segoe UI", sans-serif;
+      background: var(--bg);
       color: rgb(var(--ink));
-      background:
-        linear-gradient(180deg, rgba(var(--y2)/.16), rgba(var(--y)/.10) 34%, transparent),
-        radial-gradient(620px 420px at 78% -12%, rgba(var(--y2)/.24), transparent 60%),
-        rgb(var(--bg));
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-    img{display:block;max-width:100%;height:auto}
-    a{color:inherit}
-
-    .container{max-width:var(--container);margin:0 auto;padding:0 var(--px)}
-    header{padding:10px 0}
-    .top{display:flex;justify-content:space-between;align-items:center}
-
-    /* Brand (same as index) */
-    .brand{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:9px 14px;border-radius:999px;border:var(--border-strong);background:rgba(var(--y2),.18);box-shadow:0 10px 22px rgba(245,195,0,.16)}
-    .brand span{font-weight:800;letter-spacing:.2px;font-size:15px;text-transform:uppercase}
-
-    main{padding:var(--py) 0}
-
-    .policy-shell{border:var(--border-strong);border-radius:calc(var(--radius) + 4px);padding:var(--py);background:rgba(var(--card),.95);box-shadow:0 18px 40px rgba(0,0,0,.08);display:grid;gap:14px}
-
-    /* Title/kicker */
-    .kicker{
-      font-size:.8rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:10px;
-      color: rgb(var(--ink));
-    }
-    .kicker::after{
-      content:""; display:inline-block; width:30px; height:6px; margin-left:8px; vertical-align:middle;
-      background: rgba(var(--y),1); border-radius:999px; opacity:.9;
+      line-height: 1.55;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 18px 16px 36px;
+      -webkit-font-smoothing: antialiased;
     }
 
-    h1{
-      font-size:var(--fs-h1);
-      line-height:1.14;
-      margin:6px 0 8px;
-      letter-spacing:-.2px;
+    header { width: 100%; max-width: 980px; padding: 10px 0 6px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { font-weight: 800; letter-spacing: .4px; text-transform: uppercase; font-size: 15px; text-decoration: none; color: inherit; }
+
+    main { width: 100%; max-width: 900px; display: grid; gap: 16px; }
+
+    .card {
+      background: var(--card);
+      border-radius: 28px;
+      padding: 26px 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(var(--y), .45);
+      display: grid;
+      gap: 14px;
+      text-align: center;
     }
 
-    .badge{
-      display:inline-block;
-      background:rgba(var(--y),.18);
-      color:#3d3200;
-      border-radius:999px;
-      padding:6px 10px;
-      font-weight:800;
-      font-size:.9rem;
+    h1 { margin: 6px 0 0; font-size: clamp(1.9rem, 1.2rem + 2.2vw, 2.4rem); font-weight: 800; letter-spacing: -.2px; text-align: center; }
+    .lede { margin: 0; color: rgb(var(--muted)); text-align: center; }
+
+    .icon-stage { position: relative; display: grid; place-items: center; padding: 10px; }
+    .burst { position: relative; width: 180px; height: 180px; border-radius: var(--tile-radius); display: grid; place-items: center; }
+    .ring { position: absolute; inset: 0; border-radius: var(--tile-radius); border: 4px solid rgba(var(--y), 1); opacity: .42; transform: scale(1); }
+    .ring:nth-child(1) { animation: ripple 1.9s linear infinite; }
+    .ring:nth-child(2) { opacity: .28; animation: ripple 1.9s linear infinite; animation-delay: .35s; }
+    .ring:nth-child(3) { opacity: .16; animation: ripple 1.9s linear infinite; animation-delay: .7s; }
+
+    .bee-tile { position: relative; width: 136px; height: 136px; border-radius: var(--tile-radius); overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,.16); background: linear-gradient(160deg, rgba(var(--y), .14), rgba(var(--y), .05)); }
+    .bee-tile img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; display: block; }
+
+    h2 { margin: 1em 0 .55em; font-size: 1.1rem; font-weight: 800; }
+    p { margin: .6em 0; color: rgb(var(--muted)); }
+    ul { margin: .2em 0 .8em 1.2em; color: rgb(var(--muted)); }
+    li { margin: .35em 0; }
+
+    .meta { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; color: rgb(var(--muted)); }
+    .badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: var(--gray5); font-weight: 700; color: #111; border: 1px dashed rgba(var(--y), .8); }
+
+    .foot { width: 100%; max-width: 900px; padding-top: 12px; color: rgb(var(--muted)); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; font-size: .98rem; border-top: 1px solid rgba(var(--y), .45); margin-top: 10px; }
+    .foot a { color: inherit; text-decoration: none; border-bottom: 1px dashed rgba(0,0,0,.22); }
+
+    :focus-visible { outline: 2px solid rgba(var(--y), 1); outline-offset: 3px; border-radius: 10px; }
+
+    @keyframes ripple {
+      0% { transform: scale(1); opacity: var(--start-opacity, 1); }
+      100% { transform: scale(var(--end-scale, 2.1)); opacity: 0; }
     }
 
-    /* Card */
-    .card{
-      background:rgb(var(--card));
-      border-radius:var(--radius);
-      padding:16px;
-      border:var(--border-strong);
-      box-shadow:var(--shadow-card);
+    @media (prefers-reduced-motion: reduce) {
+      .ring { animation: none; opacity: .18; }
     }
-
-    h2{
-      font-size:var(--fs-h2);
-      margin:1.1em 0 .45em;
-      line-height:1.3;
-    }
-    p{margin:.6em 0; font-size:var(--fs-body); color:rgb(var(--ink))}
-    ul{margin:.4em 0 .8em 1.1em}
-    li{margin:.3em 0; color:rgb(var(--muted))}
-    .card p, .card li{color:rgb(var(--muted))}
-
-    /* Footer */
-    .foot{
-      margin-top:4px; padding-top:12px;
-      border-top:var(--border-strong);
-      display:flex; justify-content:space-between; align-items:center; gap:12px;
-      color:rgb(var(--muted));
-    }
-    .foot a{color:inherit; text-decoration:none; border-bottom:1px dashed rgba(0,0,0,.22)}
-
-    /* Focus */
-    :focus-visible{outline:2px solid rgba(var(--y) / 1); outline-offset:2px; border-radius:8px}
-
-    /* Soft entrance */
-    [data-animate]{opacity:0;transform:translateY(6px);animation:fadeUp .45s .06s forwards}
-    @keyframes fadeUp{to{opacity:1;transform:none}}
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="container top" aria-label="Top">
-    <a class="brand" href="./" aria-label="Back to site">
-      <span>Buzzkill</span>
-    </a>
+  <header aria-label="Top">
+    <a class="brand" href="./">Buzzkill</a>
+    <nav aria-label="Privacy links" style="display:flex; gap:12px; align-items:center;">
+      <a class="brand" style="font-size:14px; text-transform:none; letter-spacing:0; font-weight:700;" href="mailto:jens@hakketjak.nl">Contact</a>
+    </nav>
   </header>
 
-  <main class="container">
-    <div class="policy-shell">
-      <div class="kicker">Privacy</div>
-      <h1>Privacy Policy</h1>
-      <p><span class="badge">Last updated: October 22, 2025</span></p>
+  <main>
+    <section class="card" aria-labelledby="policy-title">
+      <div class="icon-stage" aria-hidden="true">
+        <div class="burst">
+          <span class="ring" style="--end-scale:1.55"></span>
+          <span class="ring" style="--end-scale:1.85"></span>
+          <span class="ring" style="--end-scale:2.1"></span>
+          <div class="bee-tile">
+            <img src="./buzzkill-icon.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div>
+        <h1 id="policy-title">Privacy Policy</h1>
+        <p class="lede">Buzzkill processes everything on-device. We don't run servers, store profiles, or block you at the wrong time.</p>
+        <div class="meta">
+          <span class="badge">Last updated: October 22, 2025</span>
+          <span class="badge" style="border-style: solid; border-color: rgba(var(--y), .5);">No analytics · No ads</span>
+        </div>
+      </div>
 
-      <div class="card" data-animate>
-        <p><strong>Buzzkill</strong> helps you spend less time in selected apps using Apple Screen Time APIs. The app is private by design. It processes your selections and usage on your device. It does not send this information to a server.</p>
-
+      <div>
         <h2>Data We Collect</h2>
         <p>We do not collect, store, or transmit personal data to our servers. Buzzkill has no backend and no analytics SDKs.</p>
         <ul>
           <li><strong>App selections and usage.</strong> Your chosen apps and usage time come from Apple Screen Time and are processed on your device to create local reminder notifications. This information does not leave your device.</li>
           <li><strong>Notification content.</strong> Notification messages are generated on the device.</li>
         </ul>
+      </div>
 
+      <div>
         <h2>System Permissions We Use</h2>
         <ul>
           <li><strong>Screen Time (FamilyControls / DeviceActivity):</strong> lets you select apps and allows on-device monitoring of those selected apps only. Required for core features.</li>
           <li><strong>Notifications:</strong> needed to deliver local reminders.</li>
         </ul>
         <p>You can change these permissions in iOS Settings at any time.</p>
+      </div>
 
+      <div>
         <h2>Data Sharing</h2>
         <p>We do not share, sell, or disclose your data to third parties.</p>
+      </div>
 
+      <div>
         <h2>Data Retention</h2>
         <p>Buzzkill does not maintain a cloud account or store personal data on a server. Settings you configure (such as selected apps, intervals, tone, language) are stored locally on your device and can be removed by deleting the app.</p>
+      </div>
 
+      <div>
         <h2>Crash Reports and Diagnostics</h2>
         <p>If you use <strong>TestFlight</strong>, Apple may collect crash logs and diagnostic information and share them with the developer through Apple’s tools. These reports are managed by Apple under Apple’s privacy policy. Buzzkill does not include third-party crash or analytics frameworks.</p>
+      </div>
 
+      <div>
         <h2>Children’s Privacy</h2>
         <p>Buzzkill is intended for individuals who are at least 13 years old, or the minimum age required in your jurisdiction. If you believe a child provided data to us through Apple channels, contact us and we will work with Apple to address it.</p>
+      </div>
 
+      <div>
         <h2>Security</h2>
         <p>All processing occurs on your device. We do not operate servers that hold your data.</p>
+      </div>
 
+      <div>
         <h2>International Transfers</h2>
         <p>We do not transfer your data internationally because we do not transmit it off your device.</p>
+      </div>
 
+      <div>
         <h2>Your Rights</h2>
         <p>Your rights may vary by location. Because Buzzkill does not collect or store personal data on servers, most requests can be handled by changing permissions in iOS Settings or uninstalling the app. If you have questions, contact us.</p>
+      </div>
 
+      <div>
         <h2>Changes to This Policy</h2>
         <p>We may update this policy as the app evolves. Material changes will appear on this page with a new “Last updated” date.</p>
+      </div>
 
+      <div>
         <h2>Contact</h2>
         <p>Email: <a href="mailto:jens@hakketjak.nl">jens@hakketjak.nl</a></p>
       </div>
-
-      <div class="foot">
-        <span>© <span id="y"></span> Buzzkill</span>
-        <a href="./">Back to site</a>
-      </div>
-    </div>
+    </section>
   </main>
+
+  <footer class="foot" aria-label="Footer">
+    <span>© <span id="y"></span> Buzzkill</span>
+    <a href="./">Back to site</a>
+  </footer>
 
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
