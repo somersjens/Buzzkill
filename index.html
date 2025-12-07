@@ -174,10 +174,9 @@
     .card p{margin:0;color:rgb(var(--muted))}
 
     /* Privacy facts (aligned, same size) */
-    .facts{display:grid;gap:8px;margin:0;padding:0;list-style:none}
-    .fact{display:grid;grid-template-columns:144px 1fr;gap:10px;align-items:flex-start;font-size:var(--fs-body)}
-    .fact .label{font-weight:800; font-size:1em; line-height:1.5; justify-self:end; text-align:right; padding:.15rem .5rem; border-radius:999px; background:rgba(var(--y),.18); color:#3d3200;}
-    .fact .body{margin:0; font-size:1em; line-height:1.5; color:rgb(var(--muted))}
+    .facts{display:grid;gap:8px;margin:0;padding-left:18px;list-style:disc}
+    .fact{font-size:var(--fs-body); color:rgb(var(--muted))}
+    .fact .body{margin:0; font-size:1em; line-height:1.5;}
 
     /* Slim support banner */
     .cta-banner{margin-top:14px;background:rgb(var(--card));border:var(--border-strong);border-radius: var(--radius);padding: 12px 14px;box-shadow: 0 16px 32px rgba(245,195,0,.16);}
@@ -327,15 +326,12 @@
       <div class="card" data-animate>
         <ul class="facts">
           <li class="fact">
-            <span class="label">Right time</span>
             <p class="body">Apps are never blocked at the wrong time, Buzzkill only sends notifications.</p>
           </li>
           <li class="fact">
-            <span class="label">Simple</span>
             <p class="body">No pointless gamification, just a fast, focused and simple app that gets out of your way.</p>
           </li>
           <li class="fact">
-            <span class="label">Privacy first</span>
             <p class="body">Privacy first: all data stays safely on your phone.</p>
           </li>
         </ul>
