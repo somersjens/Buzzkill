@@ -141,9 +141,15 @@
       z-index:0;
     }
     .hero-art img{width: 168px; height: 168px; border-radius: 26%; position:relative; z-index:1; box-shadow:0 22px 38px rgba(0,0,0,.18)}
-    .hero-art .donate{
-      margin-top:16px;
+    .hero-art .donate{margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+    .hero-art .donate p{margin:0;font-size:var(--fs-small);color:rgb(var(--muted))}
+    .btn.paypal{
+      background:linear-gradient(135deg,#ffc439,#f5b800);
+      color:#1a1a1a;
+      box-shadow:0 10px 22px rgba(255,196,57,.3);
+      border:1px solid rgba(0,0,0,.08);
     }
+    .btn.paypal svg{width:18px;height:18px}
 
     /* Kicker */
     .kicker{
@@ -241,12 +247,16 @@
         <div class="icon-wrap">
           <img src="./buzzkill-icon.png" alt="">
         </div>
-        <div class="donate">
-          <form action="https://www.paypal.com/donate" method="post" target="_top">
-            <input type="hidden" name="hosted_button_id" value="FNB87BRQJYB7G" />
-            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-            <img alt="" border="0" src="https://www.paypal.com/en_NL/i/scr/pixel.gif" width="1" height="1" />
-          </form>
+        <div class="donate" role="group" aria-label="Support">
+          <a class="btn paypal" href="https://www.paypal.com/donate/?hosted_button_id=FNB87BRQJYB7G" target="_blank" rel="noreferrer noopener">
+            <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+              <rect x="3" y="3" width="26" height="26" rx="8" fill="#003087"/>
+              <path d="M12 10.5h5.6c3 0 5 1.4 5 3.9 0 2.8-2.3 4.5-5.7 4.5h-2l-.6 3.6h-3.7L12 10.5Z" fill="#fff"/>
+              <path d="M18.1 14.3c.9 0 1.5-.4 1.5-1.1s-.5-1-1.4-1H15l-.4 2.1h3.5Z" fill="#009cde"/>
+            </svg>
+            Support development
+          </a>
+          <p>Keep Buzzkill independent and privacy-first.</p>
         </div>
       </div>
     </section>
