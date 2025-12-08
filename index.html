@@ -108,9 +108,14 @@
     .row{
       display:flex;
       gap:10px;
-      align-items:center;            /* center icons with text */
+      align-items:flex-start;         /* align to title line */
     }
-    .icon{width:20px;height:20px;flex:0 0 20px}
+    .icon{
+      width:20px;
+      height:20px;
+      flex:0 0 20px;
+      margin-top:2px;                 /* tiny nudge to center on h3 */
+    }
 
     /* HERO as one big card */
     .hero-card{
@@ -384,7 +389,7 @@
 
         <article class="card d2" data-animate>
           <div class="row">
-            <!-- New "tuning sliders" icon for Personalise -->
+            <!-- "tuning sliders" icon for Personalise -->
             <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M5 7h6M15 7h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
               <circle cx="13" cy="7" r="1.7" stroke="currentColor" stroke-width="1.6" fill="none"/>
