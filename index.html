@@ -115,14 +115,11 @@
     }
 
     .hero-copy{
-      background:rgba(var(--card),.98);
-      border:var(--border-strong);
-      border-radius:calc(var(--radius) + 2px);
-      padding:18px;
-      box-shadow:none;
+      /* removed extra card styling so it sits directly on the grey panel */
       display:flex;
       flex-direction:column;
-      gap:10px
+      gap:10px;
+      padding:4px 0;
     }
 
     h1{font-size: var(--fs-hero); line-height: 1.08; margin: 6px 0 8px; letter-spacing: -.3px;}
@@ -152,7 +149,7 @@
       border-radius: 28%;
       display:grid;
       place-items:center;
-      background: rgb(var(--bg));
+      background: rgb(var(--card)); /* changed from yellow to grey */
       box-shadow: var(--shadow-hero);
       position:relative;
       isolation:isolate;
@@ -375,7 +372,7 @@
             </svg>
             <div>
               <h3>Personalise as you like</h3>
-              <p>Pick your tone of voice in 14 languages, set buzz-free time and choose a personal daily limit.</p>
+              <p>Pick your tone of voice in 14 languages, set buzz-free time and choose a daily limit.</p>
             </div>
           </div>
         </article>
@@ -388,7 +385,7 @@
             </svg>
             <div>
               <h3>Get notified (a lot)</h3>
-              <p>Receive frequent notifications for each selected app, and you can pause everything with one tap.</p>
+              <p>Receive frequent notifications for each selected app, and pause everything with one tap.</p>
             </div>
           </div>
         </article>
