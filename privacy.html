@@ -100,12 +100,13 @@
     }
 
     h1{
-      font-size:var(--fs-hero);
-      line-height:1.14;
-      margin:6px 0 8px;
-      letter-spacing:-.2px;
-      text-align:center; /* centered heading */
+  font-size:clamp(1.7rem, 1.1rem + 2vw, 2.2rem); /* slightly smaller */
+  line-height:1.14;
+  margin:18px 0 18px; /* more padding above and below */
+  letter-spacing:-.2px;
+  text-align:center;
     }
+
 
     .meta{
       margin:0;
@@ -114,7 +115,7 @@
     }
     .meta-bottom{
       margin-top:18px;
-      text-align:right;  /* bottom-right aligned */
+      text-align:left;  /* bottom-right aligned */
     }
     .badge{
       display:inline-block;
