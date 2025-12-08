@@ -96,14 +96,31 @@
     }
     .panel + .panel{margin-top:14px}
 
-    /* Hero block */
+    /* Cards */
+    .card{
+      background: rgb(var(--card));
+      border-radius: var(--radius);
+      padding: 16px;
+      border: var(--border-strong);
+      box-shadow: var(--shadow-card);
+    }
+
+    .row{display:flex;gap:10px;align-items:flex-start}
+    .icon{width:20px;height:20px;flex:0 0 20px}
+
+    /* HERO as one big card */
+    .hero-card{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
     .hero-block-header{
       display:flex;
       justify-content:center;
-      margin-bottom:10px;
     }
 
-    /* Hero layout (inside the panel) */
+    /* Hero layout inside the card */
     .hero{
       display:grid;
       grid-template-columns: 1.05fr .95fr;
@@ -115,11 +132,9 @@
     }
 
     .hero-copy{
-      /* removed extra card styling so it sits directly on the grey panel */
       display:flex;
       flex-direction:column;
       gap:10px;
-      padding:4px 0;
     }
 
     h1{font-size: var(--fs-hero); line-height: 1.08; margin: 6px 0 8px; letter-spacing: -.3px;}
@@ -149,7 +164,7 @@
       border-radius: 28%;
       display:grid;
       place-items:center;
-      background: rgb(var(--card)); /* changed from yellow to grey */
+      background: rgb(var(--bg)); /* keep yellow inside the grey card */
       box-shadow: var(--shadow-hero);
       position:relative;
       isolation:isolate;
@@ -230,13 +245,9 @@
       opacity:.9;
     }
 
-    /* Cards */
+    /* Grid of HOW-TO cards */
     .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:14px 0 2px}
     @media (max-width:720px){ .grid{grid-template-columns:1fr} }
-
-    .card{background: rgb(var(--card));border-radius: var(--radius);padding: 16px;border: var(--border-strong);box-shadow: var(--shadow-card);}
-    .row{display:flex;gap:10px;align-items:flex-start}
-    .icon{width:20px;height:20px;flex:0 0 20px}
 
     .card h3{font-size: var(--fs-h3); margin: 0 0 6px}
     .card p{margin:0;color:rgb(var(--muted))}
@@ -296,40 +307,42 @@
 </head>
 <body>
   <main class="container">
-    <!-- HERO BLOCK (Buzzkill + hero in one big grey block) -->
-    <section class="panel" aria-label="Top">
-      <div class="hero-block-header">
-        <a class="brand" href="./" aria-label="Buzzkill home">
-          <span>Buzzkill</span>
-        </a>
-      </div>
-
-      <div class="hero">
-        <div class="hero-copy">
-          <h1 data-animate>Stop wasting time, start buzzing</h1>
-          <p class="lead d1" data-animate>
-            How often do you open an app “for a minute” and suddenly notice that hours have passed and you feel exhausted? With Buzzkill you stay aware while you scroll, so doomscrolling becomes a thing of the past.
-          </p>
-
-          <div class="cta d2" data-animate>
-            <a class="btn" href="https://apps.apple.com/app/id6754295660">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Download
-            </a>
-            <a class="btn secondary paypal" href="https://www.paypal.com/donate/?hosted_button_id=FNB87BRQJYB7G" target="_blank" rel="noreferrer noopener">
-              Support via PayPal
-            </a>
-          </div>
+    <!-- HERO as one big grey content block -->
+    <section aria-label="Top">
+      <article class="card hero-card" data-animate>
+        <div class="hero-block-header">
+          <a class="brand" href="./" aria-label="Buzzkill home">
+            <span>Buzzkill</span>
+          </a>
         </div>
 
-        <div class="hero-art d3" data-animate>
-          <div class="icon-wrap">
-            <img src="./buzzkill-icon.png" alt="">
+        <div class="hero">
+          <div class="hero-copy">
+            <h1>Stop wasting time, start buzzing</h1>
+            <p class="lead d1">
+              How often do you open an app “for a minute” and suddenly notice that hours have passed and you feel exhausted? With Buzzkill you stay aware while you scroll, so doomscrolling becomes a thing of the past.
+            </p>
+
+            <div class="cta d2">
+              <a class="btn" href="https://apps.apple.com/app/id6754295660">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Download
+              </a>
+              <a class="btn secondary paypal" href="https://www.paypal.com/donate/?hosted_button_id=FNB87BRQJYB7G" target="_blank" rel="noreferrer noopener">
+                Support via PayPal
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-art d3">
+            <div class="icon-wrap">
+              <img src="./buzzkill-icon.png" alt="">
+            </div>
           </div>
         </div>
-      </div>
+      </article>
     </section>
 
     <!-- HOW TO -->
