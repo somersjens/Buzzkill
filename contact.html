@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Buzzkill — Send an email</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Send a message to the Buzzkill team via email.">
+  <meta name="theme-color" content="#F5C300">
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" href="./buzzkill-icon.png">
+  <link rel="apple-touch-icon" href="./buzzkill-icon.png">
+  <meta property="og:title" content="Buzzkill — Send an email">
+  <meta property="og:description" content="Reach the Buzzkill team with feedback or questions.">
+  <meta property="og:image" content="./buzzkill-icon.png">
+
+  <style>
+    /* === Design tokens: same as index for full alignment === */
+    :root{
+      --y: 254 203 31;
+      --y2: 254 203 31;
+      --ink: 22 22 22;
+      --muted: 112 112 112;
+      --card: 240 240 240;
+      --bg: 254 203 31;
+      --border-strong: 2px solid rgba(var(--y), 1);
+
+      --container: 920px;
+      --px: 18px;
+      --py: 20px;
+      --radius: 16px;
+
+      --fs-hero: clamp(1.9rem, 1.2rem + 2.4vw, 2.5rem);
+      --fs-h3: 1.08rem;
+      --fs-body: 1.02rem;
+      --fs-small: .95rem;
+
+      --shadow-card: none;
+      --shadow-btn: none;
+      --shadow-hero: none;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --ink: 235 235 235; --muted: 170 170 170; --card: 26 26 26; --bg: 10 10 10 }
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-size:16px;
+      line-height:1.55;
+      color: rgb(var(--ink));
+      background: rgb(var(--bg));
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a{color:inherit}
+
+    .container{max-width:var(--container); margin:0 auto; padding:0 var(--px)}
+
+    /* Brand */
+    .brand{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      text-decoration:none;
+      padding:11px 18px;
+      border-radius:999px;
+      border:var(--border-strong);
+      background:rgb(var(--card));
+      box-shadow:none;
+    }
+    .brand span{
+      font-weight:800;
+      letter-spacing:.18px;
+      font-size:17px;
+      text-transform:uppercase;
+    }
+
+    section{padding:10px 0}
+
+    .card{
+      background: rgb(var(--card));
+      border-radius: var(--radius);
+      padding: 16px;
+      border: var(--border-strong);
+      box-shadow: var(--shadow-card);
+    }
+
+    .hero-card{display:flex;flex-direction:column;gap:16px}
+    .hero-block-header{display:flex;justify-content:center;}
+    h1{font-size: var(--fs-hero); line-height: 1.1; margin: 6px 0 8px; letter-spacing: -.3px;}
+    .lead{font-size: var(--fs-body); color: rgb(var(--muted)); margin:0}
+
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+    @media(max-width:720px){.grid{grid-template-columns:1fr}}
+
+    form{display:grid;gap:12px;margin-top:6px}
+    label{font-weight:700;font-size:var(--fs-small)}
+    input, textarea{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(0,0,0,.16);
+      font:inherit;
+      color:inherit;
+      background:rgba(var(--card), 0.95);
+    }
+    textarea{min-height:140px; resize:vertical}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:12px;
+      font-weight:700;
+      text-decoration:none;
+      font-size:.95rem;
+      color:#111;
+      background:linear-gradient(135deg, rgba(var(--y),1), rgba(var(--y2),1));
+      border:1px solid rgba(0,0,0,.06);
+      box-shadow: var(--shadow-btn);
+      transition: transform .06s ease, box-shadow .2s ease;
+      cursor:pointer;
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow:none}
+
+    .info-card{color:rgb(var(--muted));}
+    .info-card h3{margin:0 0 6px;font-size:var(--fs-h3);color:rgb(var(--ink))}
+    .info-card p{margin:0;font-size:var(--fs-body)}
+
+    footer{padding: var(--py) 0; border-top:var(--border-strong)}
+    .footer{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+    .links{display:flex;gap:14px;flex-wrap:wrap}
+    .links a{color:inherit;text-decoration:none;border-bottom:1px dashed rgba(0,0,0,.22);font-size:.95rem}
+
+    :focus-visible{outline: 2px solid rgba(var(--y) / 1); outline-offset: 2px; border-radius: 8px}
+    [data-animate]{opacity:0;transform:translateY(6px);animation:fadeUp .45s .06s forwards}
+    .d1{animation-delay:.12s}.d2{animation-delay:.18s}
+    @keyframes fadeUp{to{opacity:1;transform:none}}
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section aria-label="Send an email">
+      <article class="card hero-card" data-animate>
+        <div class="hero-block-header">
+          <a class="brand" href="./" aria-label="Buzzkill home">
+            <span>Buzzkill</span>
+          </a>
+        </div>
+
+        <div class="grid">
+          <div>
+            <h1>Send an email</h1>
+            <p class="lead">Share feedback, report a bug, or ask a question. Your message goes straight to jens@hakketjak.nl.</p>
+            <form action="mailto:jens@hakketjak.nl" method="post" enctype="text/plain">
+              <div>
+                <label for="name">Your name</label>
+                <input id="name" name="Name" type="text" placeholder="How should we address you?">
+              </div>
+              <div>
+                <label for="email">Your email</label>
+                <input id="email" name="Email" type="email" placeholder="you@example.com" required>
+              </div>
+              <div>
+                <label for="subject">Subject</label>
+                <input id="subject" name="Subject" type="text" placeholder="What is this about?" required>
+              </div>
+              <div>
+                <label for="message">Message</label>
+                <textarea id="message" name="Message" placeholder="Tell us what’s on your mind" required></textarea>
+              </div>
+              <button class="btn" type="submit">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" width="20" height="20">
+                  <path d="m4 7 8 5 8-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M4 17h16V7H4v10Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Send email
+              </button>
+            </form>
+          </div>
+
+          <div class="card info-card d1">
+            <h3>What to include</h3>
+            <p>Adding your device model, iOS version, and a short description of what you expected helps us respond quickly.</p>
+            <p style="margin-top:10px">Prefer your own client? Email us directly at <a href="mailto:jens@hakketjak.nl">jens@hakketjak.nl</a>.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div class="footer" aria-label="Footer">
+      <div>© <span id="y"></span> Buzzkill</div>
+      <nav class="links" aria-label="Footer links">
+        <a href="./">Main page</a>
+        <a href="./privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
