@@ -155,11 +155,14 @@
         <div class="grid">
           <div>
             <h1>Send an email</h1>
-            <p class="lead">Share feedback, report a bug, or ask a question. Your message goes straight to jens@hakketjak.nl.</p>
-            <form action="mailto:jens@hakketjak.nl" method="post" enctype="text/plain">
+            <p class="lead">Share feedback, report a bug, or ask a question. Your message goes straight to jens@hakketjak.nl without needing your mail app.</p>
+            <form id="contact-form" action="https://formsubmit.co/ajax/jens@hakketjak.nl" method="POST">
+              <input type="hidden" name="_subject" value="Buzzkill contact form submission">
+              <input type="hidden" name="_captcha" value="false">
+              <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px">
               <div>
                 <label for="name">Your name</label>
-                <input id="name" name="Name" type="text" placeholder="How should we address you?">
+                <input id="name" name="Name" type="text" placeholder="How should we address you?" required>
               </div>
               <div>
                 <label for="email">Your email</label>
@@ -178,8 +181,9 @@
                   <path d="m4 7 8 5 8-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                   <path d="M4 17h16V7H4v10Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Send email
+                Send message
               </button>
+              <p id="form-status" role="status" aria-live="polite" style="margin:6px 0 0;font-size:var(--fs-small);color:rgb(var(--muted));"></p>
             </form>
           </div>
 
@@ -205,6 +209,32 @@
 
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('form-status');
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      status.textContent = 'Sending your message…';
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: formData
+        });
+
+        if (!response.ok) throw new Error('Request failed');
+
+        status.textContent = 'Thanks! Your message has been sent.';
+        form.reset();
+      } catch (error) {
+        console.error(error);
+        status.textContent = 'Something went wrong. Please try again in a moment or email us directly.';
+      }
+    });
   </script>
 </body>
 </html>
